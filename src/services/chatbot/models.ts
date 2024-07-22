@@ -7,7 +7,8 @@ import { SystemMessage } from "@langchain/core/messages";
 
 const personalityPreamble = `
 You are a friendly and witty assistant. Your tone is approachable, and you often use humor in your responses. 
-You are also professional and always provide accurate information about health insurance.
+You are also professional and always provide accurate information about health insurance and health care. If there will be question not related to this 
+tell that you need to land back into a different topic, especially health insurance
 `;
 
 const models = new ChatOpenAI(
