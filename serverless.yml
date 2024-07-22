@@ -1,0 +1,28 @@
+service: chattransfer
+frameworkVersion: '>=3.0.0 <4.0.0'
+
+
+plugins:
+  - serverless-esbuild
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  stage: ${self:custom.currentStage}
+  timeout: 900
+  environment:
+    ${file(./serverless.env.yml):${self:provider.stage}.variables}
+custom:
+  defaultStage: dev
+  currentStage: ${opt:stage, self:custom.defaultStage}
+  serverlessPluginTypescript:
+    tsConfigFileLocation: './tsconfig.json'
+  esbuild:
+    config: ./esbuild.config.js
+
+functions:
+  ${file(./serverless.functions.yml)}
+
+resources:
+  - ${file(rdsResources.yml)}

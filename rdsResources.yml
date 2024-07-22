@@ -1,0 +1,59 @@
+Resources:
+  RDSInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceIdentifier: chattransfer-rds-${self:provider.stage}
+      DBName: ${self:provider.environment.DB_NAME}
+      MasterUsername: ${self:provider.environment.DB_USERNAME}
+      MasterUserPassword: ${self:provider.environment.DB_PASSWORD}
+      Engine: postgres
+      EngineVersion: "16.3"
+      DBInstanceClass: db.t3.micro
+      AllocatedStorage: "20"
+      PubliclyAccessible: true
+  RDSSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      SecretString: '{"username":"${self:provider.environment.DB_USERNAME}", "password":"${self:provider.environment.DB_PASSWORD}"}'
+  RDSProxy:
+    Type: AWS::RDS::DBProxy
+    Properties:
+      DBProxyName: chattransfer-db-proxy-${self:provider.stage}
+      EngineFamily: POSTGRESQL
+      RoleArn: !GetAtt RDSProxyRole.Arn
+      Auth:
+        - AuthScheme: SECRETS
+          IAMAuth: DISABLED
+          SecretArn: !Ref RDSSecret
+      VpcSubnetIds: ${file(./serverless.env.yml):${self:provider.stage}.vpc.publicSubnetIds}
+  RDSProxyTargetGroup:
+    Type: AWS::RDS::DBProxyTargetGroup
+    Properties:
+      TargetGroupName: default
+      DBProxyName: !Ref RDSProxy
+      DBInstanceIdentifiers:
+        - chattransfer-rds-${self:provider.stage}
+  RDSProxyRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: "sts:AssumeRole"
+            Principal:
+              Service: "rds.amazonaws.com"
+      Policies:
+        - PolicyName: RDSProxyPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: "secretsmanager:GetSecretValue"
+                Resource: !Ref RDSSecret
+              - Effect: Allow
+                Action: "chattransfer:Decrypt"
+                Resource: "arn:aws:chattransfer:${self:provider.region}:${aws:accountId}:key/*"
+                Condition:
+                  StringEquals:
+                    chattransfer:ViaService: "secretsmanager.${self:provider.region}.amazonaws.com"

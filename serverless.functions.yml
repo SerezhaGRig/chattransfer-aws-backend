@@ -1,0 +1,10 @@
+sendMessage:
+  handler: src/lambdas/chatbot/sendMessage.handler
+  events:
+    - httpApi:
+        path: /send/message
+        method: POST
+        cors:
+          origin: '*'
+          headers:
+            - '*'
