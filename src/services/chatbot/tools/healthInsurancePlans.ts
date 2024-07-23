@@ -1,10 +1,16 @@
-import { DynamicTool } from "@langchain/core/tools";
+import { DynamicStructuredTool } from "@langchain/core/tools";
+import { z } from "zod";
 
-export const healthInsurancePlans = new DynamicTool({
+export const healthInsurancePlans = new DynamicStructuredTool({
   name: "health-insurance-plan",
   description:
-    "Call if user possibly is interested in medical insurance plans or insurance plans " +
-    "or user question is out of medical insurance context or health care info",
+    "Call if it is users first message or question and this tool isn't already called",
+  schema: z.object({
+    age: z.string().describe("age of customer"),
+    householdIncome: z.string().describe("household income of customer"),
+    householdSize: z.string().describe("customer's household size"),
+    effectiveDate: z.string().describe("effective date customer"),
+  }),
   func: async () => {
     // api call
     return `tell something about health insurance plans`;
