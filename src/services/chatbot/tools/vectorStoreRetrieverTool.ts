@@ -1,21 +1,21 @@
 import { createRetrieverTool } from "langchain/tools/retriever";
 import { vectorStore } from "../vectorStore";
-import { filesDescriptions } from "./fileDescriptions";
+import { toolDescriptions } from "./toolDescriptions";
 
-export const retrieverTools = filesDescriptions.map((file) =>
+export const retrieverTools = toolDescriptions.map((toolDescr) =>
   createRetrieverTool(
     vectorStore.asRetriever({
       filter: {
         where: {
           operator: "Like",
           path: ["source"],
-          valueText: `*${file.source}*`,
+          valueText: `*${toolDescr.source}*`,
         },
       },
     }),
     {
-      name: file.name,
-      description: file.description,
+      name: toolDescr.name,
+      description: toolDescr.description,
     },
   ),
 );

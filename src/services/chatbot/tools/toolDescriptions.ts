@@ -1,6 +1,6 @@
-const esFileDescriptions = [];
+const esToolDescriptions = [];
 
-const enFileDescriptions = [
+const enToolDescriptions = [
   {
     source: "Notice of Benefit and Payment Parameters for 2025 Final Rule",
     name: "notice-of-benefit-and-payment-parameters-for-2025-final-rule",
@@ -46,9 +46,9 @@ const enFileDescriptions = [
   },
 ];
 
-export const filesDescriptions: {
+export const toolDescriptions: {
   source: string;
   description: string;
   name: string;
 }[] =
-  process.env.BOT_NLANGUAGE === "es" ? esFileDescriptions : enFileDescriptions;
+  process.env.BOT_NLANGUAGE === "es" ? esToolDescriptions : enToolDescriptions;
