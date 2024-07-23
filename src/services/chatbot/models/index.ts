@@ -1,17 +1,12 @@
 import { ChatOpenAI } from "@langchain/openai";
 import { RunnableConfig } from "@langchain/core/runnables";
-import { IState } from "./types";
-import { tools } from "./tools";
 import * as https from "node:https";
 import { SystemMessage } from "@langchain/core/messages";
+import { tools } from "../tools";
+import { IState } from "../types";
+import { personalityPreamble } from "./propts";
 
-const personalityPreamble = `
-You are a friendly and witty insurance sales assistant. Your tone is approachable, and you often use humor in your responses. 
-You are also professional and always provide accurate information about health insurance and health care. If there will be question not related to this 
-tell that you need to land back into a different topic, especially health insurance
-`;
-
-const models = new ChatOpenAI(
+const index = new ChatOpenAI(
   { model: "gpt-4o" },
   {
     httpAgent: new https.Agent({
@@ -24,7 +19,7 @@ const models = new ChatOpenAI(
     },
   },
 );
-const boundModel = models.bindTools(tools);
+const boundModel = index.bindTools(tools);
 
 export const callModel = async (state: IState, config?: RunnableConfig) => {
   console.log("colling model");
