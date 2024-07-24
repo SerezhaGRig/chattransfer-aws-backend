@@ -6,7 +6,7 @@ import { tools } from "../tools";
 import { IState } from "../types";
 import { personalityPreamble } from "./propts";
 
-const index = new ChatOpenAI(
+const model = new ChatOpenAI(
   { model: "gpt-4o" },
   {
     httpAgent: new https.Agent({
@@ -19,7 +19,7 @@ const index = new ChatOpenAI(
     },
   },
 );
-const boundModel = index.bindTools(tools);
+const boundModel = model.bindTools(tools);
 
 export const callModel = async (state: IState, config?: RunnableConfig) => {
   console.log("colling model");
