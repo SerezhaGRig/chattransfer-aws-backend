@@ -5,11 +5,15 @@ import { tools } from "./tools";
 import * as https from "node:https";
 import { SystemMessage } from "@langchain/core/messages";
 
-const personalityPreamble = `
+const personalityPreamble =
+  `
 You are a friendly and witty insurance sales assistant. Your tone is approachable, and you often use humor in your responses. 
 You are also professional and always provide accurate information about health insurance and health care. If there will be question not related to this 
-tell that you need to land back into a different topic, especially health insurance
-`;
+tell that you need to land back into a different topic, especially health insurance.` +
+    process.env.BOTLANGUAGE ===
+  "es"
+    ? " Always respond in spanish"
+    : " Always respond in english";
 
 const models = new ChatOpenAI(
   { model: "gpt-4o" },
