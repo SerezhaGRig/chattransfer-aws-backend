@@ -4,18 +4,10 @@ import weaviate from "weaviate-ts-client";
 import { WeaviateStore } from "@langchain/weaviate";
 import { Document } from "langchain/document";
 
-const {
-  WEAVIATE_SCHEME,
-  WEAVIATE_HOST,
-  WEAVIATE_API_KEY,
-  INDEX_NAME,
-  INDEX_NAME_ES,
-} = process.env;
+const { WEAVIATE_SCHEME, WEAVIATE_HOST, WEAVIATE_API_KEY, INDEX_NAME } =
+  process.env;
 
-const indexName =
-  process.env.BOT_LANGUAGE === "es"
-    ? INDEX_NAME || "Test"
-    : INDEX_NAME_ES || "Test-es";
+const indexName = INDEX_NAME || "Test";
 
 const client = (weaviate as any).client({
   scheme: WEAVIATE_SCHEME || "https",
