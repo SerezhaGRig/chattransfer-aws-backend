@@ -1,7 +1,7 @@
 import { createRetrieverTool } from "langchain/tools/retriever";
 import { vectorStore } from "../vectorStore";
 import { toolDescriptions } from "./toolDescriptions";
-import { translateIntoSpanish } from "./helpers";
+import { translateIntoEnglish } from "./helpers";
 
 export const retrieverTools = toolDescriptions.map((toolDescr) => {
   const tool = createRetrieverTool(
@@ -21,17 +21,27 @@ export const retrieverTools = toolDescriptions.map((toolDescr) => {
   );
   if (process.env.BOT_LANGUAGE === "es") {
     const originalInvoke = tool.invoke.bind(tool);
-    tool.invoke = async (
-      {
-        query,
-      }: {
-        query: string;
-      },
-      config,
-    ) => {
-      const translatedQuery = await translateIntoSpanish(query);
-      return originalInvoke(translatedQuery, config);
+
+    tool.invoke = async (params, config) => {
+      const { query } = params;
+      console.info("params", params);
+      console.info("query", query);
+
+      if (!query) {
+        console.error("Query is undefined");
+        return "Unable to retrieve info from tool";
+      }
+
+      try {
+        const translatedQuery = await translateIntoEnglish(query);
+        console.info("translatedQuery", { translatedQuery });
+        return originalInvoke({ query: translatedQuery }, config);
+      } catch (error) {
+        console.error("Error in translation:", error);
+        return "Unable to retrieve info from tool";
+      }
     };
   }
+
   return tool;
 });
