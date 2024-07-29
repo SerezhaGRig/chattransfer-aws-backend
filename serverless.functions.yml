@@ -4,7 +4,7 @@ sendMessage:
     BOT_LANGUAGE: en
   events:
     - httpApi:
-        path: send/message
+        path: /send/message
         method: POST
         cors:
           origin: '*'
@@ -16,7 +16,7 @@ sendMessageEs:
     BOT_LANGUAGE: es
   events:
     - httpApi:
-        path: es/send/message
+        path: /es/send/message
         method: POST
         cors:
           origin: '*'
