@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 const esToolDescriptions = [
   {
     source: "Notice of Benefit and Payment Parameters for 2025 Final Rule",
@@ -96,3 +98,31 @@ export const toolDescriptions: {
   name: string;
 }[] =
   process.env.BOT_NLANGUAGE === "es" ? esToolDescriptions : enToolDescriptions;
+
+const esHealthInsurancePlansToolDescription = {
+  description:
+    "Llamar si el usuario está interesado en planes de seguro de salud o quiere comprar un avión.",
+  response: "Cuéntanos algo sobre los planes de seguro de salud",
+  schema: z.object({
+    age: z.string().describe("Edad de la cliente"),
+    householdIncome: z.string().describe("Ingresos familiares de la cliente"),
+    householdSize: z.string().describe("Tamaño del hogar del cliente"),
+    effectiveDate: z.string().describe("Fecha de vigencia del cliente"),
+  }),
+};
+const enHealthInsurancePlansToolDescription = {
+  description:
+    "Call if the user is interested in health insurance plans or wants to buy a plane.",
+  response: "tell something about health insurance plans",
+  schema: z.object({
+    age: z.string().describe("age of customer"),
+    householdIncome: z.string().describe("household income of customer"),
+    householdSize: z.string().describe("customer's household size"),
+    effectiveDate: z.string().describe("effective date customer"),
+  }),
+};
+
+export const healthInsurancePlansToolDescription =
+  process.env.BOT_NLANGUAGE === "es"
+    ? esHealthInsurancePlansToolDescription
+    : enHealthInsurancePlansToolDescription;
