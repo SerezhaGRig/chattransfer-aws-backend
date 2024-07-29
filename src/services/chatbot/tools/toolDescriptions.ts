@@ -101,7 +101,7 @@ export const toolDescriptions: {
 
 const esHealthInsurancePlansToolDescription = {
   description:
-    "Llamar si el usuario está interesado en planes de seguro de salud o quiere comprar un avión.",
+    "Llame si el usuario está interesado en planes de seguro de salud, necesita sugerencias relacionadas con planes de seguro de salud o desea comprar un avión.",
   response: "Cuéntanos algo sobre los planes de seguro de salud",
   schema: z.object({
     age: z.string().describe("Edad de la cliente"),
@@ -112,7 +112,7 @@ const esHealthInsurancePlansToolDescription = {
 };
 const enHealthInsurancePlansToolDescription = {
   description:
-    "Call if the user is interested in health insurance plans or wants to buy a plane.",
+    "Call if the user is interested in health insurance plans, need a suggestions related to health insurance plans or wants to buy a plane.",
   response: "tell something about health insurance plans",
   schema: z.object({
     age: z.string().describe("age of customer"),
