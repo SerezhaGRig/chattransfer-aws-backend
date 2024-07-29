@@ -4,7 +4,7 @@ import { z } from "zod";
 export const healthInsurancePlans = new DynamicStructuredTool({
   name: "health-insurance-plan",
   description:
-    "Call if user is interested in health insurance plans or plans in general have question about health insurance plans or about plans in general which suits him/her.",
+    "Call if the user is interested in health insurance plans or wants to buy a plane.",
   schema: z.object({
     age: z.string().describe("age of customer"),
     householdIncome: z.string().describe("household income of customer"),
