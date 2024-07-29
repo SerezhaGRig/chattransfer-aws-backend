@@ -1,7 +1,7 @@
 import { createRetrieverTool } from "langchain/tools/retriever";
 import { vectorStore } from "../vectorStore";
 import { toolDescriptions } from "./toolDescriptions";
-import { translateIntoEnglish } from "./helpers";
+import { translateIntoEnglish, translateIntoSpanish } from "./helpers";
 
 export const retrieverTools = toolDescriptions.map((toolDescr) => {
   const tool = createRetrieverTool(
@@ -35,7 +35,13 @@ export const retrieverTools = toolDescriptions.map((toolDescr) => {
       try {
         const translatedQuery = await translateIntoEnglish(query);
         console.info("translatedQuery", { translatedQuery });
-        return originalInvoke({ query: translatedQuery }, config);
+        const response = await originalInvoke(
+          { query: translatedQuery },
+          config,
+        );
+        const responseTranslatedToSpanish =
+          await translateIntoSpanish(response);
+        return responseTranslatedToSpanish;
       } catch (error) {
         console.error("Error in translation:", error);
         return "Unable to retrieve info from tool";
