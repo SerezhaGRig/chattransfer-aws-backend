@@ -27,10 +27,9 @@ sendMessageEs:
 getConversationById:
   handler: src/lambdas/chatbot/conversation/get.handler
   environment:
-    BOT_LANGUAGE: es
   events:
     - httpApi:
-        path: conversation/{conversationId}
+        path: /conversation/{conversationId}
         method: GET
         cors:
           origin: '*'
