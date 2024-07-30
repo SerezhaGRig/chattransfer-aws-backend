@@ -37,7 +37,7 @@ export const buildGetConversationById =
   async (conversationId: string): Promise<ConversationMessage[]> => {
     // Find faq with passed id and all necessary relations
     const checkpoints = await queryRunner.query(
-      `SELECT metadata FROM checkpoints WHERE thread_id = ${conversationId}`,
+      `SELECT metadata FROM checkpoints WHERE thread_id = '${conversationId}'`,
     );
 
     const conversation = checkpoints
