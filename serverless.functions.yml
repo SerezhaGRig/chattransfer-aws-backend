@@ -1,5 +1,5 @@
 sendMessage:
-  handler: src/lambdas/chatbot/sendMessage.handler
+  handler: src/lambdas/chatbot/message/send.handler
   environment:
     BOT_LANGUAGE: en
   events:
@@ -10,14 +10,28 @@ sendMessage:
           origin: '*'
           headers:
             - '*'
+
 sendMessageEs:
-  handler: src/lambdas/chatbot/sendMessage.handler
+  handler: src/lambdas/chatbot/message/send.handler
   environment:
     BOT_LANGUAGE: es
   events:
     - httpApi:
         path: /es/send/message
         method: POST
+        cors:
+          origin: '*'
+          headers:
+            - '*'
+
+getConversationById:
+  handler: src/lambdas/chatbot/conversation/get.handler
+  environment:
+    BOT_LANGUAGE: es
+  events:
+    - httpApi:
+        path: conversation/{conversationId}
+        method: GET
         cors:
           origin: '*'
           headers:
