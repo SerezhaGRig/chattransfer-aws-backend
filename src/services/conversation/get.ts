@@ -39,10 +39,11 @@ export const buildGetConversationById =
     const checkpoints = await queryRunner.query(
       `SELECT metadata FROM checkpoints WHERE thread_id = '${conversationId}'`,
     );
+    console.info("checkpoints", { checkpoints });
 
     const conversation = checkpoints
-      .map((checkpoint: ConversationMetadata) => {
-        return transformMetadata(checkpoint);
+      .map((checkpoint: { metadata: string }) => {
+        return transformMetadata(JSON.parse(checkpoint.metadata));
       })
       .filter(
         (convMessage: ConversationMessage | undefined) =>

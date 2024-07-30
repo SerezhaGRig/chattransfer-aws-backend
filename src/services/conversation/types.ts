@@ -69,11 +69,11 @@ export type ConversationMetadataHuman = {
 export const isAgentMessage = (
   metadata: ConversationMetadata,
 ): metadata is ConversationMetadataAgent => {
-  return "agent" in metadata;
+  return metadata?.writes?.["agent"] !== undefined;
 };
 
 export const isHumanMessage = (
   metadata: ConversationMetadata,
 ): metadata is ConversationMetadataHuman => {
-  return "__start__" in metadata;
+  return metadata?.writes?.["__start__"] !== undefined;
 };
