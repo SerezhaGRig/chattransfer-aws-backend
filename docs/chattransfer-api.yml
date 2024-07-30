@@ -6,7 +6,7 @@ info:
 servers:
   - url: https://k4jxmf55zi.execute-api.us-east-1.amazonaws.com/send
 paths:
-  /message:
+  /send/message:
     post:
       summary: Send a message
       description: Sends a message and receives a response.
