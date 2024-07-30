@@ -17,7 +17,7 @@ const excludeFile = [
 ];
 /* Load all PDFs within the specified directory */
 const run = async () => {
-  const directoryLoader = new DirectoryLoader("src/documents/data/", {
+  const directoryLoader = new DirectoryLoader("src/documents/data", {
     ".pdf": (path) => new PDFLoader(path),
     ".txt": (path) => new TextLoader(path),
     ".csv": (path) => new CSVLoader(path),

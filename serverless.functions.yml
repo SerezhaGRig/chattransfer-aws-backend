@@ -1,8 +1,22 @@
 sendMessage:
   handler: src/lambdas/chatbot/sendMessage.handler
+  environment:
+    BOT_LANGUAGE: en
   events:
     - httpApi:
         path: /send/message
+        method: POST
+        cors:
+          origin: '*'
+          headers:
+            - '*'
+sendMessageEs:
+  handler: src/lambdas/chatbot/sendMessage.handler
+  environment:
+    BOT_LANGUAGE: es
+  events:
+    - httpApi:
+        path: /es/send/message
         method: POST
         cors:
           origin: '*'
