@@ -26,7 +26,6 @@ sendMessageEs:
 
 getConversationById:
   handler: src/lambdas/chatbot/conversation/get.handler
-  environment:
   events:
     - httpApi:
         path: /conversation/{conversationId}
