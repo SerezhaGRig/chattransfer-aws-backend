@@ -126,3 +126,67 @@ export const healthInsurancePlansToolDescription =
   process.env.BOT_NLANGUAGE === "es"
     ? esHealthInsurancePlansToolDescription
     : enHealthInsurancePlansToolDescription;
+
+const esConnectWithAgentToolDescription = {
+  description:
+    "Llamar si el usuario desea comunicarse con el agente. Solicitar detalles uno por uno en preguntas separadas.",
+  response:
+    "Informar a los usuarios de que se está desarrollando la próxima generación de servicios de seguros con inteligencia artificial y que estará disponible pronto, pero que, mientras tanto, podemos hacer que un agente de seguros autorizado de su zona haga un seguimiento. Informar al usuario de que un agente de seguros autorizado se pondrá en contacto con él en las próximas 24 a 48 horas.",
+  schema: z.object({
+    agreement: z
+      .boolean()
+      .describe(
+        "Pide permiso para recopilar información de contacto para contactarlos más tarde. Es verdadero si el usuario da su consentimiento; de lo contrario, es falso.",
+      ),
+    name: z
+      .string()
+      .optional()
+      .describe(
+        "Solicitar el nombre del usuario si éste acepta recopilar información de contacto",
+      ),
+    email: z
+      .string()
+      .describe(
+        "Solicitar al usuario su correo electrónico si el usuario da su consentimiento para recopilar información de contacto",
+      ),
+    phoneNumber: z
+      .string()
+      .describe(
+        "Solicitar al usuario su número de teléfono si el usuario acepta recopilar información de contacto",
+      ),
+  }),
+};
+const enConnectWithAgentToolDescription = {
+  description:
+    "Call if the user wants to  connect with agent. Ask details one by one in separate questions.",
+  response:
+    "Let users know that the next generation of AI Insurance services is being built and will be available soon but in the meantime we can have a licensed insurance agent in their area follow up. Inform the user that they will be contacted by a licensed insurance agent within the next ~24-48 hours.",
+  schema: z.object({
+    agreement: z
+      .boolean()
+      .describe(
+        "Ask for permission to collect contact information to reach them back at a later time. Is true if user gives her agreement else is false",
+      ),
+    name: z
+      .string()
+      .optional()
+      .describe(
+        "ask user for name if user gives her agreement to collect contact information",
+      ),
+    email: z
+      .string()
+      .describe(
+        "ask user for his/her email if user gives his/her agreement to collect contact information",
+      ),
+    phoneNumber: z
+      .string()
+      .describe(
+        "ask user for his/her phone number if user gives his/her agreement to collect contact information",
+      ),
+  }),
+};
+
+export const connectWithAgentToolDescription =
+  process.env.BOT_NLANGUAGE === "es"
+    ? esConnectWithAgentToolDescription
+    : enConnectWithAgentToolDescription;
