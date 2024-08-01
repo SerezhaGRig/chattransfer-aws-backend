@@ -129,7 +129,7 @@ export const healthInsurancePlansToolDescription =
 
 const esConnectWithAgentToolDescription = {
   description:
-    "Llamar si el usuario desea comunicarse con el agente. Solicitar detalles uno por uno en preguntas separadas.",
+    "Llamar si el usuario desea comunicarse con el agente. Informar a los usuarios que se está desarrollando la próxima generación de servicios de seguros con inteligencia artificial y que estará disponible pronto, pero mientras tanto, podemos hacer que un agente de seguros autorizado de su área haga un seguimiento. Pregunte los detalles uno por uno en preguntas separadas.",
   response:
     "Informar a los usuarios de que se está desarrollando la próxima generación de servicios de seguros con inteligencia artificial y que estará disponible pronto, pero que, mientras tanto, podemos hacer que un agente de seguros autorizado de su zona haga un seguimiento. Informar al usuario de que un agente de seguros autorizado se pondrá en contacto con él en las próximas 24 a 48 horas.",
   schema: z.object({
@@ -158,7 +158,7 @@ const esConnectWithAgentToolDescription = {
 };
 const enConnectWithAgentToolDescription = {
   description:
-    "Call if the user wants to  connect with agent. Ask details one by one in separate questions.",
+    "Call if the user wants to  connect with agent. Let users know that the next generation of AI Insurance services is being built and will be available soon but in the meantime we can have a licensed insurance agent in their area follow up. Ask details one by one in separate questions.",
   response:
     "Let users know that the next generation of AI Insurance services is being built and will be available soon but in the meantime we can have a licensed insurance agent in their area follow up. Inform the user that they will be contacted by a licensed insurance agent within the next ~24-48 hours.",
   schema: z.object({
