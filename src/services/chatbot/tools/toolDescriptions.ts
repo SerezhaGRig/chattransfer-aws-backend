@@ -107,7 +107,11 @@ const esHealthInsurancePlansToolDescription = {
     age: z.string().describe("Edad de la cliente"),
     householdIncome: z.string().describe("Ingresos familiares de la cliente"),
     householdSize: z.string().describe("Tamaño del hogar del cliente"),
-    effectiveDate: z.string().describe("Fecha de vigencia del cliente"),
+    effectiveDate: z
+      .string()
+      .describe(
+        "La fecha efectiva para el cliente debe ser el primer día del mes.",
+      ),
   }),
 };
 const enHealthInsurancePlansToolDescription = {
@@ -118,7 +122,11 @@ const enHealthInsurancePlansToolDescription = {
     age: z.string().describe("age of customer"),
     householdIncome: z.string().describe("household income of customer"),
     householdSize: z.string().describe("customer's household size"),
-    effectiveDate: z.string().describe("effective date customer"),
+    effectiveDate: z
+      .string()
+      .describe(
+        "effective date for customer it should be the first of the month",
+      ),
   }),
 };
 
