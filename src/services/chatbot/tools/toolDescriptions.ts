@@ -146,11 +146,13 @@ const esConnectWithAgentToolDescription = {
       ),
     email: z
       .string()
+      .optional()
       .describe(
         "Solicitar al usuario su correo electrónico si el usuario da su consentimiento para recopilar información de contacto",
       ),
     phoneNumber: z
       .string()
+      .optional()
       .describe(
         "Solicitar al usuario su número de teléfono si el usuario acepta recopilar información de contacto",
       ),
@@ -177,12 +179,14 @@ const enConnectWithAgentToolDescription = {
       .string()
       .describe(
         "ask user for his/her email if user gives his/her agreement to collect contact information",
-      ),
+      )
+      .optional(),
     phoneNumber: z
       .string()
       .describe(
         "ask user for his/her phone number if user gives his/her agreement to collect contact information",
-      ),
+      )
+      .optional(),
   }),
 };
 

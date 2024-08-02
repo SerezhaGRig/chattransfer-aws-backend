@@ -1,4 +1,6 @@
 import { MissingEnvException } from "../utils/errors";
+import Contact from "../entities/contact";
+import { getMigrations } from "../migrations";
 
 const dbConnectionData = () => ({
   host: process.env.DB_HOST,
@@ -23,5 +25,8 @@ export const getConnectionParams = () => {
     type: "postgres" as const,
     logging: false,
     synchronize: false,
+    entities: [Contact],
+    migrations: [...getMigrations],
+    migrationsTransactionMode: "each" as const,
   };
 };

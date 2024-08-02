@@ -5,7 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node ./build/build.js",
-    "start": "node ./esBundle/bundle.js"
+    "start": "node ./esBundle/bundle.js",
+    "migration:generate": "env-cmd -e migrate -f .env-cmdrc --use-shell \"ts-node ./node_modules/.bin/typeorm migration:generate ./src/entities -d ./src/config/typeorm.config.ts\"  || echo \"Migration file not created!\"",
+    "migration:run": "env-cmd -e migrate -f .env-cmdrc --use-shell \"ts-node ./node_modules/.bin/typeorm migration:run -d ./src/config/typeorm.config.ts\""
   },
   "keywords": [],
   "author": "",
@@ -33,7 +35,6 @@
     "prettier": "^3.3.2",
     "serverless": "^3.38.0",
     "serverless-esbuild": "^1.52.1",
-    "ts-node": "^10.9.2",
     "tsx": "^4.15.7",
     "typeorm": "^0.3.20",
     "weaviate-ts-client": "^2.2.0",
@@ -45,11 +46,13 @@
     "@types/pg": "^8.11.6",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
     "@typescript-eslint/parser": "^7.14.1",
+    "env-cmd": "^10.1.0",
     "esbuild": "^0.20.2",
     "esbuild-plugin-tsc": "^0.4.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "serverless-plugin-typescript": "^2.1.5",
+    "ts-node": "^10.9.2",
     "typescript": "^5.5.3",
     "typescript-eslint": "^7.14.1"
   }
