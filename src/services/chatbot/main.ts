@@ -55,7 +55,9 @@ export const sendMessage = async (message: string, threadId: string) => {
       if (msg instanceof AIMessage) {
         console.log("AI Assistant:", msg.content);
         console.log("-----\n");
-        return msg.content;
+        if (typeof msg.content === "string") {
+          return msg.content;
+        }
       }
       // } else if (msg instanceof HumanMessage) {
       //   console.log("User:", msg.content);

@@ -11,6 +11,8 @@ provider:
   region: us-east-1
   stage: ${self:custom.currentStage}
   timeout: 900
+  httpApi:
+    cors: true
   environment:
     ${file(./serverless.env.yml):${self:provider.stage}.variables}
 custom:

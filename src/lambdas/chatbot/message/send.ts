@@ -1,8 +1,8 @@
-import { response } from "../../middleware/response";
-import { validate } from "../../middleware/validate";
-import { sendMessageRequestBodySchema } from "../../validation/sendMessage";
 import { z } from "zod";
-import { sendMessage } from "../../services/chatbot/main";
+import { sendMessage } from "../../../services/chatbot/main";
+import { response } from "../../../middleware/response";
+import { validate } from "../../../middleware/validate";
+import { sendMessageRequestBodySchema } from "../../../validation/message";
 
 type SendMessageParams = z.infer<typeof sendMessageRequestBodySchema>;
 export const logic = async (p: SendMessageParams) => {

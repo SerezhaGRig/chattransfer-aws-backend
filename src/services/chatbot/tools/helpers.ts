@@ -23,3 +23,14 @@ export const translateIntoSpanish = async (message: string) => {
   }
   return message;
 };
+export const translateInto = async (message: string, language: string) => {
+  const response = await translatorModel.invoke([
+    new SystemMessage({ content: `translate user massage into ${language}` }),
+    new HumanMessage({ content: message }),
+  ]);
+  console.log(`${language} translation response`, { response });
+  if (typeof response.content === "string") {
+    return response.content;
+  }
+  return message;
+};
