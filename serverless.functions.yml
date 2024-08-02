@@ -24,6 +24,19 @@ sendMessageEs:
           headers:
             - '*'
 
+sendMessageMultilang:
+  handler: src/lambdas/chatbot/message/sendMultilang.handler
+  environment:
+    BOT_LANGUAGE: en
+  events:
+    - httpApi:
+        path: /multilanguage/send/message
+        method: POST
+        cors:
+          origin: '*'
+          headers:
+            - '*'
+
 getConversationById:
   handler: src/lambdas/chatbot/conversation/get.handler
   events:
