@@ -1,4 +1,3 @@
-import User from "../entities/user";
 import { MissingEnvException } from "../utils/errors";
 
 const dbConnectionData = () => ({
@@ -24,6 +23,5 @@ export const getConnectionParams = () => {
     type: "postgres" as const,
     logging: false,
     synchronize: false,
-    entities: [User],
   };
 };
