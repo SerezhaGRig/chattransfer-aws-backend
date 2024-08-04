@@ -8,19 +8,19 @@ export default class Contact {
   @Column({
     type: "varchar",
     length: 255,
-    nullable: false,
+    nullable: true,
   })
   name: string;
   @Column({
     type: "varchar",
     length: 255,
-    nullable: false,
+    nullable: true,
   })
   email: string;
   @Column({
     type: "varchar",
     length: 255,
-    nullable: false,
+    nullable: true,
   })
   phoneNumber: string;
 }

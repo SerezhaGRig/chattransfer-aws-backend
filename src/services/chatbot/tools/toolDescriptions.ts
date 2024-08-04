@@ -171,7 +171,6 @@ const enConnectWithAgentToolDescription = {
       ),
     name: z
       .string()
-      .optional()
       .describe(
         "ask user for name if user gives her agreement to collect contact information",
       ),
@@ -179,14 +178,12 @@ const enConnectWithAgentToolDescription = {
       .string()
       .describe(
         "ask user for his/her email if user gives his/her agreement to collect contact information",
-      )
-      .optional(),
+      ),
     phoneNumber: z
       .string()
       .describe(
         "ask user for his/her phone number if user gives his/her agreement to collect contact information",
-      )
-      .optional(),
+      ),
   }),
 };
 
