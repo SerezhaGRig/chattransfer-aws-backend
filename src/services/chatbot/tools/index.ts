@@ -6,7 +6,7 @@ import { healthInsurancePlans } from "./healthInsurancePlans";
 
 export const tools = [
   ...retrieverTools,
-  connectWithAgent,
   healthInsurancePlans,
+  connectWithAgent,
 ];
 export const toolNode = new ToolNode<{ messages: BaseMessage[] }>(tools);

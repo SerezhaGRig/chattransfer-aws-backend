@@ -101,32 +101,72 @@ export const toolDescriptions: {
 
 const esHealthInsurancePlansToolDescription = {
   description:
-    "Llame si el usuario está interesado en planes de seguro de salud, necesita sugerencias relacionadas con planes de seguro de salud o desea comprar un avión. Pregunte los detalles uno por uno en preguntas separadas.",
-  response: "Cuéntanos algo sobre los planes de seguro de salud",
+    "Llamar si el usuario está interesado en planes de seguro médico, necesita sugerencias relacionadas con planes de seguro médico o quiere comprar un seguro de avión. Pregunte los detalles uno por uno en preguntas separadas.",
+  response: `Si el usuario proporciona su código postal, añádalo a la URL como parámetro de consulta para el campo zip_code. El formato debe ser:
+
+https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=XXXXX
+
+Reemplace XXXXX con el código postal del usuario.
+
+Por ejemplo, si el usuario proporciona el código postal 12345, la URL sería:
+
+https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=12345
+
+Puede incluir un mensaje como:
+
+"Para explorar las opciones de atención médica de la ACA y comenzar con el proceso de solicitud, visite nuestro mercado aquí: [Cubed Insurance Services ACA Marketplace](https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=XXXXX)
+
+Asegúrese de reemplazar XXXXX con el código postal real proporcionado por el usuario.`,
   schema: z.object({
+    zipcode: z
+      .string()
+      .describe("El código postal del cliente debe tener 5 dígitos"),
     age: z.string().describe("Edad de la cliente"),
-    householdIncome: z.string().describe("Ingresos familiares de la cliente"),
     householdSize: z.string().describe("Tamaño del hogar del cliente"),
+    householdIncome: z.string().describe("Ingresos familiares de la cliente"),
     effectiveDate: z
       .string()
       .describe(
         "La fecha efectiva para el cliente debe ser el primer día del mes.",
       ),
+    tobaccoUse: z
+      .boolean()
+      .describe(
+        "El estado de consumo de tabaco del cliente puede ser verdadero o falso.",
+      ),
   }),
 };
 const enHealthInsurancePlansToolDescription = {
   description:
-    "Call if the user is interested in health insurance plans, need a suggestions related to health insurance plans or wants to buy a plane. Ask details one by one in separate questions.",
-  response: "tell something about health insurance plans",
+    "Call if the user is interested in health insurance plans, need a suggestions related to health insurance plans or wants to buy a insurance plane. Ask details one by one in separate questions.",
+  response: `If the user provides their ZIP code, append it to the URL as a query parameter for the zip_code field. The format should be:
+
+https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=XXXXX
+
+Replace XXXXX with the user's ZIP code.
+
+For example, if the user provides the ZIP code 12345, the URL would be:
+
+https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=12345
+
+You can include a message such as:
+
+"To explore ACA healthcare options and get started with the application process, please visit our marketplace here: [Cubed Insurance Services ACA Marketplace](https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=XXXXX)
+
+Ensure to replace XXXXX with the actual ZIP code provided by the user.`,
   schema: z.object({
+    zipcode: z.string().describe("zip code of customer should have 5 digits"),
     age: z.string().describe("age of customer"),
-    householdIncome: z.string().describe("household income of customer"),
     householdSize: z.string().describe("customer's household size"),
+    householdIncome: z.string().describe("household income of customer"),
     effectiveDate: z
       .string()
       .describe(
         "effective date for customer it should be the first of the month",
       ),
+    tobaccoUse: z
+      .boolean()
+      .describe("tobacco use status of customer it can be true or false"),
   }),
 };
 
