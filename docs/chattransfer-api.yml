@@ -69,7 +69,7 @@ paths:
                 properties:
                   data:
                     type: string
-  multilang/send/message:
+  multilanguage/send/message:
     post:
       summary: Send a message
       description: Sends a message and receives a response.
