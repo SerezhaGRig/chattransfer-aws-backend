@@ -12,7 +12,7 @@ export const connectWithAgent = new DynamicStructuredTool({
     if (agreement) {
       try {
         const dataSource = await getDataSourceInstance(getConnectionParams());
-        await dataSource.getRepository(Contact).save({
+        await dataSource.getRepository(Contact).insert({
           email,
           name,
           phoneNumber,
