@@ -116,7 +116,9 @@ Puede incluir un mensaje como:
 
 "Para explorar las opciones de atención médica de la ACA y comenzar con el proceso de solicitud, visite nuestro mercado aquí: [Cubed Insurance Services ACA Marketplace](https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=XXXXX)
 
-Asegúrese de reemplazar XXXXX con el código postal real proporcionado por el usuario.`,
+Asegúrese de reemplazar XXXXX con el código postal real proporcionado por el usuario.
+Informar al usuario:
+- Si un cliente desea conectarse directamente con un agente de seguros, informe a los usuarios que se está desarrollando la próxima generación de servicios de seguros con inteligencia artificial y que estará disponible pronto, pero mientras tanto, podemos hacer que un agente de seguros autorizado en su área realice un seguimiento.`,
   schema: z.object({
     zipcode: z
       .string()
@@ -153,7 +155,9 @@ You can include a message such as:
 
 "To explore ACA healthcare options and get started with the application process, please visit our marketplace here: [Cubed Insurance Services ACA Marketplace](https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=XXXXX)
 
-Ensure to replace XXXXX with the actual ZIP code provided by the user.`,
+Ensure to replace XXXXX with the actual ZIP code provided by the user.
+Inform the User: 
+- If a customer wants to connect directly with an insurance agent, Let users know that the next generation of AI Insurance services is being built and will be available soon but in the meantime we can have a licensed insurance agent in their area follow up.`,
   schema: z.object({
     zipcode: z.string().describe("zip code of customer should have 5 digits"),
     age: z.string().describe("age of customer"),
