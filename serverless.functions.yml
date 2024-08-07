@@ -51,13 +51,13 @@ addDocument:
   handler: src/lambdas/chatbot/documents/add.handler
   events:
     - s3:
-      bucket: ${self:custom.s3.liveLeadsDocumentsBucketName}
-      event: s3:ObjectCreated:*
-      existing: true
+        bucket: ${self:custom.s3.liveLeadsDocumentsBucketName}
+        event: s3:ObjectCreated:*
+        existing: true
 deleteDocument:
   handler: src/lambdas/chatbot/documents/delete.handler
   events:
       - s3:
-        bucket: ${self:custom.s3.liveLeadsDocumentsBucketName}
-        event: s3:ObjectRemoved:*
-        existing: true
+          bucket: ${self:custom.s3.liveLeadsDocumentsBucketName}
+          event: s3:ObjectRemoved:*
+          existing: true
