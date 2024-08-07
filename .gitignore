@@ -4,3 +4,4 @@
 ./esBundle
 .build
 **/.serverless
+.env-cmdrc

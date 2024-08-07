@@ -101,24 +101,76 @@ export const toolDescriptions: {
 
 const esHealthInsurancePlansToolDescription = {
   description:
-    "Llame si el usuario está interesado en planes de seguro de salud, necesita sugerencias relacionadas con planes de seguro de salud o desea comprar un avión. Pregunte los detalles uno por uno en preguntas separadas.",
-  response: "Cuéntanos algo sobre los planes de seguro de salud",
+    "Llamar si el usuario está interesado en planes de seguro médico, necesita sugerencias relacionadas con planes de seguro médico o quiere comprar un seguro de avión. Pregunte los detalles uno por uno en preguntas separadas.",
+  response: `Si el usuario proporciona su código postal, añádalo a la URL como parámetro de consulta para el campo zip_code. El formato debe ser:
+
+https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=XXXXX
+
+Reemplace XXXXX con el código postal del usuario.
+
+Por ejemplo, si el usuario proporciona el código postal 12345, la URL sería:
+
+https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=12345
+
+Puede incluir un mensaje como:
+
+"Para explorar las opciones de atención médica de la ACA y comenzar con el proceso de solicitud, visite nuestro mercado aquí: [Cubed Insurance Services ACA Marketplace](https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=XXXXX)
+
+Asegúrese de reemplazar XXXXX con el código postal real proporcionado por el usuario.
+Informar al usuario:
+- Si un cliente desea conectarse directamente con un agente de seguros, informe a los usuarios que se está desarrollando la próxima generación de servicios de seguros con inteligencia artificial y que estará disponible pronto, pero mientras tanto, podemos hacer que un agente de seguros autorizado en su área realice un seguimiento.`,
   schema: z.object({
+    zipcode: z
+      .string()
+      .describe("El código postal del cliente debe tener 5 dígitos"),
     age: z.string().describe("Edad de la cliente"),
-    householdIncome: z.string().describe("Ingresos familiares de la cliente"),
     householdSize: z.string().describe("Tamaño del hogar del cliente"),
-    effectiveDate: z.string().describe("Fecha de vigencia del cliente"),
+    householdIncome: z.string().describe("Ingresos familiares de la cliente"),
+    effectiveDate: z
+      .string()
+      .describe(
+        "La fecha efectiva para el cliente debe ser el primer día del mes.",
+      ),
+    tobaccoUse: z
+      .boolean()
+      .describe(
+        "El estado de consumo de tabaco del cliente puede ser verdadero o falso.",
+      ),
   }),
 };
 const enHealthInsurancePlansToolDescription = {
   description:
-    "Call if the user is interested in health insurance plans, need a suggestions related to health insurance plans or wants to buy a plane. Ask details one by one in separate questions.",
-  response: "tell something about health insurance plans",
+    "Call if the user is interested in health insurance plans, need a suggestions related to health insurance plans or wants to buy a insurance plane. Ask details one by one in separate questions.",
+  response: `If the user provides their ZIP code, append it to the URL as a query parameter for the zip_code field. The format should be:
+
+https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=XXXXX
+
+Replace XXXXX with the user's ZIP code.
+
+For example, if the user provides the ZIP code 12345, the URL would be:
+
+https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=12345
+
+You can include a message such as:
+
+"To explore ACA healthcare options and get started with the application process, please visit our marketplace here: [Cubed Insurance Services ACA Marketplace](https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=XXXXX)
+
+Ensure to replace XXXXX with the actual ZIP code provided by the user.
+Inform the User: 
+- If a customer wants to connect directly with an insurance agent, Let users know that the next generation of AI Insurance services is being built and will be available soon but in the meantime we can have a licensed insurance agent in their area follow up.`,
   schema: z.object({
+    zipcode: z.string().describe("zip code of customer should have 5 digits"),
     age: z.string().describe("age of customer"),
-    householdIncome: z.string().describe("household income of customer"),
     householdSize: z.string().describe("customer's household size"),
-    effectiveDate: z.string().describe("effective date customer"),
+    householdIncome: z.string().describe("household income of customer"),
+    effectiveDate: z
+      .string()
+      .describe(
+        "effective date for customer it should be the first of the month",
+      ),
+    tobaccoUse: z
+      .boolean()
+      .describe("tobacco use status of customer it can be true or false"),
   }),
 };
 
@@ -126,3 +178,68 @@ export const healthInsurancePlansToolDescription =
   process.env.BOT_NLANGUAGE === "es"
     ? esHealthInsurancePlansToolDescription
     : enHealthInsurancePlansToolDescription;
+
+const esConnectWithAgentToolDescription = {
+  description:
+    "Llamar si el usuario desea comunicarse con el agente. Informar a los usuarios que se está desarrollando la próxima generación de servicios de seguros con inteligencia artificial y que estará disponible pronto, pero mientras tanto, podemos hacer que un agente de seguros autorizado de su área haga un seguimiento. Pregunte los detalles uno por uno en preguntas separadas.",
+  response:
+    "Informar a los usuarios de que se está desarrollando la próxima generación de servicios de seguros con inteligencia artificial y que estará disponible pronto, pero que, mientras tanto, podemos hacer que un agente de seguros autorizado de su zona haga un seguimiento. Informar al usuario de que un agente de seguros autorizado se pondrá en contacto con él en las próximas 24 a 48 horas.",
+  schema: z.object({
+    agreement: z
+      .boolean()
+      .describe(
+        "Pide permiso para recopilar información de contacto para contactarlos más tarde. Es verdadero si el usuario da su consentimiento; de lo contrario, es falso.",
+      ),
+    name: z
+      .string()
+      .optional()
+      .describe(
+        "Solicitar el nombre del usuario si éste acepta recopilar información de contacto",
+      ),
+    email: z
+      .string()
+      .optional()
+      .describe(
+        "Solicitar al usuario su correo electrónico si el usuario da su consentimiento para recopilar información de contacto",
+      ),
+    phoneNumber: z
+      .string()
+      .optional()
+      .describe(
+        "Solicitar al usuario su número de teléfono si el usuario acepta recopilar información de contacto",
+      ),
+  }),
+};
+const enConnectWithAgentToolDescription = {
+  description:
+    "Call if the user wants to  connect with agent. Let users know that the next generation of AI Insurance services is being built and will be available soon but in the meantime we can have a licensed insurance agent in their area follow up. Ask details one by one in separate questions.",
+  response:
+    "Let users know that the next generation of AI Insurance services is being built and will be available soon but in the meantime we can have a licensed insurance agent in their area follow up. Inform the user that they will be contacted by a licensed insurance agent within the next ~24-48 hours.",
+  schema: z.object({
+    agreement: z
+      .boolean()
+      .describe(
+        "Ask for permission to collect contact information to reach them back at a later time. Is true if user gives her agreement else is false",
+      ),
+    name: z
+      .string()
+      .describe(
+        "ask user for name if user gives her agreement to collect contact information",
+      ),
+    email: z
+      .string()
+      .describe(
+        "ask user for his/her email if user gives his/her agreement to collect contact information",
+      ),
+    phoneNumber: z
+      .string()
+      .describe(
+        "ask user for his/her phone number if user gives his/her agreement to collect contact information",
+      ),
+  }),
+};
+
+export const connectWithAgentToolDescription =
+  process.env.BOT_NLANGUAGE === "es"
+    ? esConnectWithAgentToolDescription
+    : enConnectWithAgentToolDescription;
