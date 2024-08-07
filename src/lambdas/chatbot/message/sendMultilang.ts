@@ -11,7 +11,7 @@ export const logic = async (p: SendMessageParams) => {
   const result = await sendMessage(translatedMessage, p.conversationId);
   const translatedResult = await translateInto(
     result,
-    `language that is used in  this text '${p.message}'`,
+    `language that is used in this text '${p.message}' if text is in english just return user message`,
   );
   return { data: translatedResult, statusCode: 200 };
 };
