@@ -3,7 +3,9 @@ import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 
 export const translateIntoEnglish = async (message: string) => {
   const response = await translatorModel.invoke([
-    new SystemMessage({ content: `translate user massage into english` }),
+    new SystemMessage({
+      content: `translate user massage into english if it is in english respond with the same message`,
+    }),
     new HumanMessage({ content: message }),
   ]);
   console.log("en translation response", { response });

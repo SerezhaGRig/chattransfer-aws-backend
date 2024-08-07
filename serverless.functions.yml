@@ -27,7 +27,7 @@ sendMessageEs:
 sendMessageMultilang:
   handler: src/lambdas/chatbot/message/sendMultilang.handler
   environment:
-    BOT_LANGUAGE: en
+    BOT_LANGUAGE: multilang
   events:
     - httpApi:
         path: /multilanguage/send/message
