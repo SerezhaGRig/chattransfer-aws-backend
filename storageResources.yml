@@ -1,0 +1,7 @@
+Resources:
+  LiveLeadsDocumentsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: ${self:custom.s3.liveLeadsDocumentsBucketName}
+      VersioningConfiguration:
+        Status: Enabled

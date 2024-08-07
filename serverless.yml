@@ -11,6 +11,8 @@ provider:
   region: us-east-1
   stage: ${self:custom.currentStage}
   timeout: 900
+  iam:
+    ${file(./serverless.role.yml)}
   httpApi:
     cors: true
   environment:
@@ -22,9 +24,12 @@ custom:
     tsConfigFileLocation: './tsconfig.json'
   esbuild:
     config: ./esbuild.config.js
+  s3:
+    liveLeadsDocumentsBucketName: live-leads-bucket-${self:provider.stage}
 
 functions:
   ${file(./serverless.functions.yml)}
 
 resources:
   - ${file(rdsResources.yml)}
+  - ${file(storageResources.yml)}
