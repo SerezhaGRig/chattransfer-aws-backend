@@ -7,5 +7,5 @@ export const handler = async (event: S3Event) => {
   const deletePromises = event.Records.map((record) =>
     deleteFileFromVectorStore(record.s3.object.key),
   );
-  await Promise.any(deletePromises);
+  await Promise.all(deletePromises);
 };

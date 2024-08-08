@@ -1,27 +1,27 @@
-import { vectorStore } from "../vectorStore";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import { DirectoryLoader } from "langchain/document_loaders/fs/directory";
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
-import { TextLoader } from "langchain/document_loaders/fs/text";
 import { CSVLoader } from "langchain/document_loaders/fs/csv";
+import { TextLoader } from "langchain/document_loaders/fs/text";
 import { DocxLoader } from "@langchain/community/document_loaders/fs/docx";
-import path from "path";
+import * as p from "path";
 import os from "os";
 import * as fs from "node:fs";
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { Readable } from "stream";
+import { vectorStore } from "../vectorStore";
 const { LIVE_LEADS_DOCUMENTS_BUCKET_NAME } = process.env;
 
 const client = new S3Client();
 
 export const addFileIntoVectorStoreFromS3 = async (s3Key: string) => {
   const key = decodeURIComponent(s3Key.replace(/\+/g, " "));
-  const fileName = path.basename(key);
+  const fileName = p.basename(key);
 
   // Create a unique temporary directory
   const appPrefix = "live-leads";
-  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), appPrefix));
-  const filePath = path.join(tmpDir, fileName);
+  const tmpDir = fs.mkdtempSync(p.join(os.tmpdir(), appPrefix));
+  const filePath = p.join(tmpDir, fileName);
 
   // Download the file from S3
   const input = {
@@ -30,15 +30,22 @@ export const addFileIntoVectorStoreFromS3 = async (s3Key: string) => {
   };
   const command = new GetObjectCommand(input);
   const response = await client.send(command);
+  console.info("filePath", filePath);
+  console.info("fileName", fileName);
+  console.info("tmpDir", tmpDir);
 
   const readable = response.Body as Readable;
-  readable.pipe(fs.createWriteStream(filePath));
-
+  const writeStream = fs.createWriteStream(filePath, { encoding: "utf8" });
+  await new Promise((resolve, reject) => {
+    readable.pipe(writeStream);
+    writeStream.on("finish", resolve);
+    writeStream.on("error", reject);
+  });
   const directoryLoader = new DirectoryLoader(tmpDir, {
-    ".pdf": (path) => new PDFLoader(path),
-    ".txt": (path) => new TextLoader(path),
-    ".csv": (path) => new CSVLoader(path),
-    ".docx": (path) => new DocxLoader(path),
+    ".pdf": (pathToFile) => new PDFLoader(pathToFile),
+    ".txt": (pathToFile) => new TextLoader(pathToFile),
+    ".csv": (pathToFile) => new CSVLoader(pathToFile),
+    ".docx": (pathToFile) => new DocxLoader(pathToFile),
   });
   const docs = await directoryLoader.load();
   const textSplitter = new RecursiveCharacterTextSplitter({

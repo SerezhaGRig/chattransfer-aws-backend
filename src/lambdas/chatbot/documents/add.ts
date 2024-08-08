@@ -7,7 +7,7 @@ export const handler = async (event: S3Event) => {
   const uploadPromises = event.Records.map((record) =>
     addFileIntoVectorStoreFromS3(record.s3.object.key),
   );
-  await Promise.any(uploadPromises);
+  await Promise.all(uploadPromises);
   event.Records.map((record) => console.log(record.s3.bucket));
   event.Records.map((record) => console.log(record.s3.object));
 };
