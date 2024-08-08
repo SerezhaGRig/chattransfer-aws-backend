@@ -49,5 +49,33 @@ export const retrieverTools = toolDescriptions.map((toolDescr) => {
     };
   }
 
+  if (process.env.BOT_LANGUAGE === "multilang") {
+    const originalInvoke = tool.invoke.bind(tool);
+
+    tool.invoke = async (params, config) => {
+      const { query } = params;
+      console.info("params", params);
+      console.info("query", query);
+
+      if (!query) {
+        console.error("Query is undefined");
+        return "Unable to retrieve info from tool";
+      }
+
+      try {
+        const translatedQuery = await translateIntoEnglish(query);
+        console.info("translatedQuery", { translatedQuery });
+        const response = await originalInvoke(
+          { query: translatedQuery },
+          config,
+        );
+        return response;
+      } catch (error) {
+        console.error("Error in translation:", error);
+        return "Unable to retrieve info from tool";
+      }
+    };
+  }
+
   return tool;
 });
