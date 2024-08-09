@@ -6,5 +6,6 @@
  */
 
 import { Entities1722759881542 } from "./1722759881542-entities";
+import { Entities1723194838302 } from "./1723194838302-entities";
 
-export const getMigrations = [Entities1722759881542];
+export const getMigrations = [Entities1722759881542, Entities1723194838302];

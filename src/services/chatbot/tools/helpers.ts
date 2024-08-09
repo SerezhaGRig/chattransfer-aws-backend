@@ -36,3 +36,15 @@ export const translateInto = async (message: string, language: string) => {
   }
   return message;
 };
+export const generateDescription = async (message: string) => {
+  const response = await translatorModel.invoke([
+    new SystemMessage({ content: `generate description for user message` }),
+    new HumanMessage({ content: message }),
+  ]);
+  console.log("generated description response", { response });
+  if (typeof response.content === "string") {
+    console.log("generated description", { content: response.content });
+    return response.content;
+  }
+  return message;
+};

@@ -3,7 +3,7 @@ import { StateGraphArgs, END, START, StateGraph } from "@langchain/langgraph";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
 import { IState } from "./types";
 import { callModel } from "./models";
-import { toolNode } from "./tools";
+import { loadRetrieverTools, toolNode } from "./tools";
 import { PostgresSaver } from "./checkpointer/postgres";
 import { getPostgresConfig } from "./checkpointer/config";
 
@@ -39,6 +39,7 @@ workflow
   .addEdge("tools", "agent");
 
 export const sendMessage = async (message: string, threadId: string) => {
+  await loadRetrieverTools();
   const checkpointer = await PostgresSaver.fromConnString(getPostgresConfig());
   const app = workflow.compile({ checkpointer });
   const config = { configurable: { thread_id: threadId } };
