@@ -2,9 +2,9 @@ import { ChatOpenAI } from "@langchain/openai";
 import { RunnableConfig } from "@langchain/core/runnables";
 import * as https from "node:https";
 import { SystemMessage } from "@langchain/core/messages";
-import { tools } from "../tools";
 import { IState } from "../types";
 import { personalityPreamble } from "./propts";
+import { getTools } from "../tools";
 
 const model = new ChatOpenAI(
   { model: "gpt-4o" },
@@ -19,7 +19,6 @@ const model = new ChatOpenAI(
     },
   },
 );
-const boundModel = model.bindTools(tools);
 
 export const callModel = async (state: IState, config?: RunnableConfig) => {
   console.log("colling model");
@@ -29,6 +28,8 @@ export const callModel = async (state: IState, config?: RunnableConfig) => {
     new SystemMessage({ content: personalityPreamble }),
     ...messages,
   ];
+  const tools = await getTools();
+  const boundModel = model.bindTools(tools);
   const response = await boundModel.invoke(enhancedMessages, config);
   console.log("response", { response });
   return { messages: [response] };
