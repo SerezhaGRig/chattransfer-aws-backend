@@ -4,7 +4,7 @@ import * as https from "node:https";
 import { SystemMessage } from "@langchain/core/messages";
 import { tools } from "../tools";
 import { IState } from "../types";
-import { personalityPreamble } from "./propts";
+import { personalityPreamble, responseFormat } from "./propts";
 
 const model = new ChatOpenAI(
   { model: "gpt-4o" },
@@ -27,6 +27,7 @@ export const callModel = async (state: IState, config?: RunnableConfig) => {
   console.info("state", { state });
   const enhancedMessages = [
     new SystemMessage({ content: personalityPreamble }),
+    new SystemMessage({ content: responseFormat }),
     ...messages,
   ];
   const response = await boundModel.invoke(enhancedMessages, config);

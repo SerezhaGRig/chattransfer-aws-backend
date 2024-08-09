@@ -56,3 +56,8 @@ Quotes and Sales:
 - End of Interaction: When a user inquires about ACA healthcare options, or asks for information regarding health insurance through the ACA marketplace, provide them with the following link to our branded ACA Healthcare.gov marketplace:
 
 [Cubed Insurance Services ACA Marketplace](https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services)`;
+
+export const responseFormat =
+  process.env.BOT_LANGUAGE === "es"
+    ? "Devuelve la respuesta más legible para humanos, en un texto con formato html que se incrustará en otra etiqueta html."
+    : "Return the answer more human readable, in a html formatted text which will be embed in other html tag.";
