@@ -34,7 +34,6 @@ export const addFileIntoVectorStoreFromS3 = async (s3Key: string) => {
   };
   const command = new GetObjectCommand(input);
   const response = await client.send(command);
-  console.info("filePath", filePath);
   console.info("fileName", fileName);
   console.info("tmpDir", tmpDir);
 
@@ -66,7 +65,11 @@ export const addFileIntoVectorStoreFromS3 = async (s3Key: string) => {
     metadata: { ...doc.metadata, timestamp, pdf: undefined },
   }));
   await vectorStore.addDocuments(docsToLoad);
-  const name = fileName.split(".")[0].toLowerCase().replaceAll(" ", "-");
+  const name = fileName
+    .split(".")[0]
+    .toLowerCase()
+    .replace(/[^a-zA-Z0-9_-]/g, "_")
+    .slice(0, 63);
   const description = await generateDescription(
     docsToLoad
       .map((doc) => doc.pageContent)

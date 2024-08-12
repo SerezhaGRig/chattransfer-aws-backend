@@ -17,9 +17,6 @@ export const getTools = async () => {
 
 export const getToolsNode = async () => {
   const tools: DynamicStructuredTool[] = await getTools();
-  const retrieverToolsDynamic = await getRetrieverToolsDynamic();
-  console.info("retrieverToolsDynamic", { retrieverToolsDynamic });
-  tools.push(...retrieverToolsDynamic);
   const toolNode = new ToolNode<{ messages: BaseMessage[] }>(tools);
   return toolNode;
 };
