@@ -9,8 +9,16 @@ let tools: DynamicStructuredTool[] | undefined;
 
 export const getTools = async () => {
   if (tools === undefined) {
-    const retrieverToolsDynamic = await getRetrieverToolsDynamic();
-    tools = [healthInsurancePlans, connectWithAgent, ...retrieverToolsDynamic];
+    try {
+      const retrieverToolsDynamic = await getRetrieverToolsDynamic();
+      tools = [
+        healthInsurancePlans,
+        connectWithAgent,
+        ...retrieverToolsDynamic,
+      ];
+    } catch (e) {
+      tools = [healthInsurancePlans, connectWithAgent];
+    }
   }
   return tools;
 };

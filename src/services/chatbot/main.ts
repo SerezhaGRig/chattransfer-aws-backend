@@ -22,7 +22,7 @@ export const sendMessage = async (message: string, threadId: string) => {
         console.log("AI Assistant:", msg.content);
         console.log("-----\n");
         if (typeof msg.content === "string") {
-          return msg.content;
+          return msg.content.replace(/```html\s*|```/g, "");
         }
       }
       // } else if (msg instanceof HumanMessage) {
