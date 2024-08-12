@@ -77,6 +77,6 @@ export const addFileIntoVectorStoreFromS3 = async (s3Key: string) => {
   await dataSource.getRepository(Tool).insert({
     source: fileName,
     name,
-    description,
+    description: description.slice(0, 1023),
   });
 };
