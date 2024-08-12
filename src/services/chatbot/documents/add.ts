@@ -66,9 +66,12 @@ export const addFileIntoVectorStoreFromS3 = async (s3Key: string) => {
     metadata: { ...doc.metadata, timestamp, pdf: undefined },
   }));
   await vectorStore.addDocuments(docsToLoad);
-  const name = fileName.split(".")[0].toLowerCase().replace(" ", "-");
+  const name = fileName.split(".")[0].toLowerCase().replaceAll(" ", "-");
   const description = await generateDescription(
-    docsToLoad.map((doc) => doc.pageContent).join(),
+    docsToLoad
+      .map((doc) => doc.pageContent)
+      .slice(0, 3)
+      .join(),
   );
   const dataSource = await getDataSourceInstance(getConnectionParams());
   await dataSource.getRepository(Tool).insert({
