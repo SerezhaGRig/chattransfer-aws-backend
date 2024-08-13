@@ -6,6 +6,7 @@ import { translateIntoEnglish, translateIntoSpanish } from "./helpers";
 export const retrieverTools = toolDescriptions.map((toolDescr) => {
   const tool = createRetrieverTool(
     vectorStore.asRetriever({
+      k: 1,
       filter: {
         where: {
           operator: "Like",
@@ -53,7 +54,9 @@ export const retrieverTools = toolDescriptions.map((toolDescr) => {
     const originalInvoke = tool.invoke.bind(tool);
 
     tool.invoke = async (params, config) => {
-      const { query } = params;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      const { query } = params.query || params.args.query;
       console.info("params", params);
       console.info("query", query);
 
