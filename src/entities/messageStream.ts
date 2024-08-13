@@ -1,9 +1,12 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: "message_stream" })
 export default class MessageStream {
-  //make it not primary
-  @PrimaryColumn({
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
+
+  @Index()
+  @Column({
     type: "varchar",
     length: 255,
     nullable: false,

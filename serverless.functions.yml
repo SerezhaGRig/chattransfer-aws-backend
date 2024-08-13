@@ -51,7 +51,7 @@ getMessageResponse:
   handler: src/lambdas/chatbot/message/getResponse.handler
   events:
     - httpApi:
-        path: /message/response
+        path: /message/{messageId}/response
         method: GET
         cors:
           origin: '*'
