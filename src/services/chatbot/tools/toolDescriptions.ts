@@ -129,7 +129,7 @@ Informar al usuario:
     effectiveDate: z
       .string()
       .describe(
-        "La fecha efectiva para el cliente debe ser el primer día del mes.",
+        "La fecha efectiva para el cliente debe ser el primer día de cualquier mes.",
       ),
     tobaccoUse: z
       .boolean()
@@ -166,7 +166,7 @@ Inform the User:
     effectiveDate: z
       .string()
       .describe(
-        "effective date for customer it should be the first of the month",
+        "effective date for the customer should be the first day of any month",
       ),
     tobaccoUse: z
       .boolean()
