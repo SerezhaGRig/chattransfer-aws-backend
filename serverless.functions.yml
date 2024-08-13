@@ -25,7 +25,7 @@ sendMessageEs:
             - '*'
 
 sendMessageMultilang:
-  handler: src/lambdas/chatbot/message/sendMultilang.handler
+  handler: src/lambdas/chatbot/message/send.handler
   environment:
     BOT_LANGUAGE: multilang
   events:
@@ -47,3 +47,6 @@ getConversationById:
           origin: '*'
           headers:
             - '*'
+streamMessageResponseTask:
+  handler: src/lambdas/chatbot/message/send.handler
+  timeout: 900

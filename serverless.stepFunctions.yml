@@ -1,0 +1,18 @@
+stateMachines:
+  streamMessageResponseStepFunction:
+    events:
+      - http:
+          path: /message/response
+          method: POST
+    definition:
+      StartAt: StreamMessageResponse
+      States:
+        StreamMessageResponse:
+          Type: Task
+          Resource:
+            Fn::GetAtt: [ streamMessageResponseTask, Arn ]
+          ResultPath: "$.result"
+          Next: Done
+        Done:
+          Type: Pass
+          End: true
