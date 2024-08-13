@@ -24,7 +24,9 @@ export const retrieverTools = toolDescriptions.map((toolDescr) => {
     const originalInvoke = tool.invoke.bind(tool);
 
     tool.invoke = async (params, config) => {
-      const { query } = params;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      const query = params.query || params.args.query;
       console.info("params", params);
       console.info("query", query);
 
@@ -56,7 +58,7 @@ export const retrieverTools = toolDescriptions.map((toolDescr) => {
     tool.invoke = async (params, config) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      const { query } = params.query || params.args.query;
+      const query = params.query || params.args.query;
       console.info("params", params);
       console.info("query", query);
 
