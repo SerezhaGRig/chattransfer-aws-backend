@@ -4,7 +4,7 @@ import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 export const translateIntoEnglish = async (message: string) => {
   const response = await translatorModel.invoke([
     new SystemMessage({
-      content: `translate user massage into english if it is in english respond with the same message`,
+      content: `Translate user massage into english if it is in english respond with the same message`,
     }),
     new HumanMessage({ content: message }),
   ]);
@@ -16,7 +16,7 @@ export const translateIntoEnglish = async (message: string) => {
 };
 export const translateIntoSpanish = async (message: string) => {
   const response = await translatorModel.invoke([
-    new SystemMessage({ content: `translate user massage into spanish` }),
+    new SystemMessage({ content: `Translate user massage into spanish.` }),
     new HumanMessage({ content: message }),
   ]);
   console.log("es translation response", { response });
@@ -27,7 +27,7 @@ export const translateIntoSpanish = async (message: string) => {
 };
 export const translateInto = async (message: string, language: string) => {
   const response = await translatorModel.invoke([
-    new SystemMessage({ content: `translate user massage into ${language}` }),
+    new SystemMessage({ content: `Translate user massage into ${language}.` }),
     new HumanMessage({ content: message }),
   ]);
   console.log(`${language} translation response`, { response });
@@ -39,7 +39,7 @@ export const translateInto = async (message: string, language: string) => {
 export const generateDescription = async (message: string) => {
   const response = await translatorModel.invoke([
     new SystemMessage({
-      content: `generate description for user message description length should be less then 1024 characters and description should be as short as possible`,
+      content: `Generate description for user message. Description should be as short as possible.`,
     }),
     new HumanMessage({ content: message }),
   ]);
