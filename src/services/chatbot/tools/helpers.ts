@@ -39,7 +39,7 @@ export const translateInto = async (message: string, language: string) => {
 export const generateDescription = async (message: string) => {
   const response = await translatorModel.invoke([
     new SystemMessage({
-      content: `generate description for user message description length should be less then 1024 characters`,
+      content: `generate description for user message description length should be less then 1024 characters and description should be as short as possible`,
     }),
     new HumanMessage({ content: message }),
   ]);
