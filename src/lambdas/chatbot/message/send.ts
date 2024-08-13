@@ -5,12 +5,13 @@ import { sendMessageRequestBodySchema } from "../../../validation/message";
 type SendMessageParams = z.infer<typeof sendMessageRequestBodySchema>;
 export const logic = async (event: SendMessageParams) => {
   console.info("event", event);
+  const p = sendMessageRequestBodySchema.parse(event);
   const result = await sendMessage(
     {
-      text: event.message,
-      id: event.messageId,
+      text: p.message,
+      id: p.messageId,
     },
-    event.conversationId,
+    p.conversationId,
   );
   return { data: result, statusCode: 200 };
 };

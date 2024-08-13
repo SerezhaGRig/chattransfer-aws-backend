@@ -2,6 +2,7 @@ import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity({ name: "message_stream" })
 export default class MessageStream {
+  //make it not primary
   @PrimaryColumn({
     type: "varchar",
     length: 255,

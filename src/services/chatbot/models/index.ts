@@ -39,13 +39,15 @@ export const callModel = async (state: IState, config?: RunnableConfig) => {
   const dataSource = await getDataSourceInstance(getConnectionParams());
   const streamRepo = dataSource.getRepository(MessageStream);
   // Iterate through each chunk of the streamed response
+  const { message_id: messageId } = config.metadata;
   for await (const messageChunk of stream) {
     const { content } = messageChunk;
-    if (typeof content === "string") {
+    console.info("content", content);
+    if (typeof content === "string" && typeof messageId === "string") {
       fullMessage += content; // Append each chunk to the full message
       await streamRepo.insert({
-        conversation_id: "fake_id",
-        message: content,
+        message_id: messageId,
+        content,
         timestamp: Date.now(),
       });
     }
