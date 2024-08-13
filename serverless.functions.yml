@@ -47,6 +47,15 @@ getConversationById:
           origin: '*'
           headers:
             - '*'
+getMessageResponse:
+  handler: src/lambdas/chatbot/message/getResponse.handler
+  events:
+    - httpApi:
+        path: /message/response
+        method: GET
+        cors:
+          origin: '*'
+          headers:
 streamMessageResponseTask:
   handler: src/lambdas/chatbot/message/send.handler
   timeout: 900
