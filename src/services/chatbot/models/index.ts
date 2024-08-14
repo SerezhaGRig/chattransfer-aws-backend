@@ -4,7 +4,6 @@ import * as https from "node:https";
 import { SystemMessage } from "@langchain/core/messages";
 import { IState } from "../types";
 import { personalityPreamble, responseFormat } from "./propts";
-import { personalityPreamble } from "./propts";
 import { getTools } from "../tools";
 
 const model = new ChatOpenAI(
