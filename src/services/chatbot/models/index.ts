@@ -3,6 +3,7 @@ import { RunnableConfig } from "@langchain/core/runnables";
 import * as https from "node:https";
 import { SystemMessage } from "@langchain/core/messages";
 import { IState } from "../types";
+import { personalityPreamble, responseFormat } from "./propts";
 import { personalityPreamble } from "./propts";
 import { getTools } from "../tools";
 
@@ -26,6 +27,7 @@ export const callModel = async (state: IState, config?: RunnableConfig) => {
   console.info("state", { state });
   const enhancedMessages = [
     new SystemMessage({ content: personalityPreamble }),
+    new SystemMessage({ content: responseFormat }),
     ...messages,
   ];
   const tools = await getTools();
