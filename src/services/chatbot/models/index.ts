@@ -35,6 +35,11 @@ export const callModel = async (state: IState, config?: RunnableConfig) => {
     new SystemMessage({ content: responseFormat }),
     ...messages,
   ];
+  if (config.metadata.mode === "invoke") {
+    const response = await boundModel.invoke(enhancedMessages, config);
+    console.log("response", { response });
+    return { messages: [response] };
+  }
   const stream = await boundModel.stream(enhancedMessages, config);
   let fullMessage = ""; // Initialize an empty string to accumulate the chunks
   const dataSource = await getDataSourceInstance(getConnectionParams());

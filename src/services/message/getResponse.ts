@@ -1,4 +1,4 @@
-import { Repository } from "typeorm";
+import { MoreThan, Repository } from "typeorm";
 import MessageStream from "../../entities/messageStream";
 
 type GetMessageResponseDeps = {
@@ -7,11 +7,14 @@ type GetMessageResponseDeps = {
 
 export const buildGetMessageResponse =
   ({ streamRepo }: GetMessageResponseDeps) =>
-  async (messageId: string) => {
+  async (p: { messageId: string; from: number }) => {
     const messages = streamRepo.find({
-      where: { message_id: messageId },
+      where: {
+        message_id: p.messageId,
+        timestamp: p.from && MoreThan(p.from),
+      },
       order: {
-        timestamp: "DESC",
+        timestamp: "ASC",
       },
     });
     return messages;

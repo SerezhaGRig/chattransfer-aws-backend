@@ -1,19 +1,20 @@
 import { z } from "zod";
 import { sendMessage } from "../../../services/chatbot/main";
+import { response } from "../../../middleware/response";
+import { validate } from "../../../middleware/validate";
 import { sendMessageRequestBodySchema } from "../../../validation/message";
 
 type SendMessageParams = z.infer<typeof sendMessageRequestBodySchema>;
-export const logic = async (event: SendMessageParams) => {
-  console.info("event", event);
-  const p = sendMessageRequestBodySchema.parse(event);
+export const logic = async (p: SendMessageParams) => {
   const result = await sendMessage(
     {
       text: p.message,
-      id: p.messageId,
     },
     p.conversationId,
   );
   return { data: result, statusCode: 200 };
 };
 
-export const handler = logic;
+export const handler = response(
+  validate(logic, sendMessageRequestBodySchema, "body"),
+);
