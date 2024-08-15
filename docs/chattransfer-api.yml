@@ -228,3 +228,52 @@ paths:
                   message:
                     type: string
                     example: "Internal server error"
+  /message/{messageId}/response:
+    delete:
+      summary: Delete a message response
+      description: Deletes a specific message response by messageId.
+      parameters:
+        - in: path
+          name: messageId
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The UUID of the message to delete the response for.
+          example: "110042ff-3842-4e98-a24c-23779cda0019"
+      responses:
+        '200':
+          description: Message response successfully deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    description: Confirmation message
+                    example: "Message response successfully deleted."
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 200
+        '400':
+          description: Invalid messageId
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Invalid messageId"
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Internal server error"
