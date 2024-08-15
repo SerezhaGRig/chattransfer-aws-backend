@@ -47,6 +47,7 @@ getConversationById:
           origin: '*'
           headers:
             - '*'
+
 getMessageResponse:
   handler: src/lambdas/chatbot/message/getResponse.handler
   events:
@@ -56,6 +57,18 @@ getMessageResponse:
         cors:
           origin: '*'
           headers:
+            - '*'
+deleteMessageResponse:
+  handler: src/lambdas/chatbot/message/deleteResponse.handler
+  events:
+    - http:
+        path: /message/{messageId}/response
+        method: DELETE
+        cors:
+          origin: '*'
+          headers:
+            - '*'
+
 streamMessageResponseTask:
   handler: src/lambdas/chatbot/message/sendAndStream.handler
   environment:

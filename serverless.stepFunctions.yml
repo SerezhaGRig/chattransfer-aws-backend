@@ -4,6 +4,10 @@ stateMachines:
       - http:
           path: /message/response
           method: POST
+          cors:
+            origin: '*'
+            headers:
+              - '*'
     definition:
       StartAt: StreamMessageResponse
       States:

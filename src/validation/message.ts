@@ -21,3 +21,8 @@ export const getMessageResponseQueryParams = z
     from: z.number().int().gte(0).optional(),
   })
   .strict();
+export const deleteMessageResponsePathParams = z
+  .object({
+    messageId: z.string().uuid(),
+  })
+  .strict();
