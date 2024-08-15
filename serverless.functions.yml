@@ -3,7 +3,7 @@ sendMessage:
   environment:
     BOT_LANGUAGE: en
   events:
-    - httpApi:
+    - http:
         path: /send/message
         method: POST
         cors:
@@ -16,7 +16,7 @@ sendMessageEs:
   environment:
     BOT_LANGUAGE: es
   events:
-    - httpApi:
+    - http:
         path: /es/send/message
         method: POST
         cors:
@@ -25,11 +25,11 @@ sendMessageEs:
             - '*'
 
 sendMessageMultilang:
-  handler: src/lambdas/chatbot/message/sendMultilang.handler
+  handler: src/lambdas/chatbot/message/send.handler
   environment:
     BOT_LANGUAGE: multilang
   events:
-    - httpApi:
+    - http:
         path: /multilanguage/send/message
         method: POST
         cors:
@@ -40,10 +40,37 @@ sendMessageMultilang:
 getConversationById:
   handler: src/lambdas/chatbot/conversation/get.handler
   events:
-    - httpApi:
+    - http:
         path: /conversation/{conversationId}
         method: GET
         cors:
           origin: '*'
           headers:
             - '*'
+
+getMessageResponse:
+  handler: src/lambdas/chatbot/message/getResponse.handler
+  events:
+    - http:
+        path: /message/response
+        method: GET
+        cors:
+          origin: '*'
+          headers:
+            - '*'
+deleteMessageResponse:
+  handler: src/lambdas/chatbot/message/deleteResponse.handler
+  events:
+    - http:
+        path: /message/{messageId}/response
+        method: DELETE
+        cors:
+          origin: '*'
+          headers:
+            - '*'
+
+streamMessageResponseTask:
+  handler: src/lambdas/chatbot/message/sendAndStream.handler
+  environment:
+    BOT_LANGUAGE: multilang
+  timeout: 900

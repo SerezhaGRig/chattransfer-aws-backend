@@ -38,11 +38,20 @@ workflow
   .addConditionalEdges("agent", routeMessage)
   .addEdge("tools", "agent");
 
-export const sendMessage = async (message: string, threadId: string) => {
+export const sendMessage = async (
+  message: {
+    text: string;
+    id?: string;
+  },
+  threadId: string,
+  mode: "invoke" | "stream" = "invoke",
+) => {
   const checkpointer = await PostgresSaver.fromConnString(getPostgresConfig());
   const app = workflow.compile({ checkpointer });
-  const config = { configurable: { thread_id: threadId } };
-  const inputs = { messages: [new HumanMessage({ content: message })] };
+  const config = {
+    configurable: { thread_id: threadId, message_id: message.id, mode },
+  };
+  const inputs = { messages: [new HumanMessage({ content: message.text })] };
 
   console.log("start sending");
   console.log({ key: process.env.OPENAI_API_KEY });

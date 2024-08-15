@@ -6,7 +6,12 @@ import { sendMessageRequestBodySchema } from "../../../validation/message";
 
 type SendMessageParams = z.infer<typeof sendMessageRequestBodySchema>;
 export const logic = async (p: SendMessageParams) => {
-  const result = await sendMessage(p.message, p.conversationId);
+  const result = await sendMessage(
+    {
+      text: p.message,
+    },
+    p.conversationId,
+  );
   return { data: result, statusCode: 200 };
 };
 
