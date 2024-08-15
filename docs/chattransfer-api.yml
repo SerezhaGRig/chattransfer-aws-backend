@@ -4,7 +4,7 @@ info:
   title: SendMessage API
   description: API to send a message and receive a response.
 servers:
-  - url: https://k4jxmf55zi.execute-api.us-east-1.amazonaws.com/dev
+  - url: https://17eu8qtll9.execute-api.us-east-1.amazonaws.com/dev
 paths:
   /es/send/message:
     post:
