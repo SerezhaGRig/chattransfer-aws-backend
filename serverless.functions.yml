@@ -47,6 +47,7 @@ getConversationById:
           origin: '*'
           headers:
             - '*'
+
 addDocument:
   handler: src/lambdas/chatbot/documents/add.handler
   events:
@@ -72,6 +73,7 @@ getMessageResponse:
           origin: '*'
           headers:
             - '*'
+
 deleteMessageResponse:
   handler: src/lambdas/chatbot/message/deleteResponse.handler
   events:

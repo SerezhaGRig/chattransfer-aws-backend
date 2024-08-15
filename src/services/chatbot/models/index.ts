@@ -2,7 +2,6 @@ import { ChatOpenAI } from "@langchain/openai";
 import { RunnableConfig } from "@langchain/core/runnables";
 import * as https from "node:https";
 import { AIMessage, SystemMessage } from "@langchain/core/messages";
-import { tools } from "../tools";
 import { IState } from "../types";
 import MessageStream from "../../../entities/messageStream";
 import { getDataSourceInstance } from "../../../instances/dataSource";
@@ -37,7 +36,6 @@ export const callModel = async (state: IState, config?: RunnableConfig) => {
   ];
   const tools = await getTools();
   const boundModel = model.bindTools(tools);
-  const response = await boundModel.invoke(enhancedMessages, config);
   if (config.metadata.mode === "invoke") {
     const response = await boundModel.invoke(enhancedMessages, config);
     console.log("response", { response });
