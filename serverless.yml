@@ -4,6 +4,7 @@ frameworkVersion: '>=3.0.0 <4.0.0'
 
 plugins:
   - serverless-esbuild
+  - serverless-step-functions
 
 provider:
   name: aws
@@ -29,6 +30,8 @@ custom:
 
 functions:
   ${file(./serverless.functions.yml)}
+stepFunctions:
+  ${file(./serverless.stepFunctions.yml)}
 
 resources:
   - ${file(rdsResources.yml)}
