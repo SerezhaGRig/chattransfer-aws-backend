@@ -57,7 +57,7 @@ getMessageResponse:
           origin: '*'
           headers:
 streamMessageResponseTask:
-  handler: src/lambdas/chatbot/message/send.handler
+  handler: src/lambdas/chatbot/message/sendAndStream.handler
   environment:
     BOT_LANGUAGE: multilang
   timeout: 900

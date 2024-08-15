@@ -168,8 +168,8 @@ paths:
                     type: string
                     example: "Internal server error"
     get:
-      summary: Get message responses
-      description: Retrieves an array of message responses filtered by messageId and timestamp.
+      summary: Get message responses from stream
+      description: Retrieves an array of message responses filtered by messageId and timestamp. It starts with empty string and ends with empty string.
       parameters:
         - in: query
           name: messageId
