@@ -8,6 +8,7 @@ export const getRetrieverToolsDynamic = async () => {
   return toolDescriptionsDynamic.map((toolDescr) => {
     const tool = createRetrieverTool(
       vectorStore.asRetriever({
+        k: 1,
         filter: {
           where: {
             operator: "Like",
