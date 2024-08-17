@@ -65,4 +65,4 @@ Quotes and Sales:
 export const responseFormat =
   process.env.BOT_LANGUAGE === "es"
     ? "Devuelve la respuesta más legible para humanos, en un texto con formato html que se incrustará en otra etiqueta html. No enumere preguntas"
-    : "Return the answer more human readable, in a html formatted text which will be embed in other html tag.";
+    : "Return the answer more human readable, in a markdown formatted text which will be embed in other html tag.";

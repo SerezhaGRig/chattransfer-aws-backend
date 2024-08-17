@@ -2,6 +2,7 @@ import { AIMessage, HumanMessage } from "@langchain/core/messages";
 import { PostgresSaver } from "./checkpointer/postgres";
 import { getPostgresConfig } from "./checkpointer/config";
 import { createWorkflow } from "./workflow";
+import { markedToHtml } from "./helper";
 
 export const sendMessage = async (
   message: {
@@ -31,7 +32,11 @@ export const sendMessage = async (
         console.log("AI Assistant:", msg.content);
         console.log("-----\n");
         if (typeof msg.content === "string") {
-          return msg.content.replace(/```html\s*|```/g, "");
+          console.info("msg", { content: msg.content });
+          const messageParsed = markedToHtml(
+            msg.content.replace(/```html\s*|```/g, ""),
+          );
+          return messageParsed;
         }
       }
       // } else if (msg instanceof HumanMessage) {
