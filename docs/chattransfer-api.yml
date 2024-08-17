@@ -169,7 +169,7 @@ paths:
                     example: "Internal server error"
     get:
       summary: Get message responses from stream
-      description: Retrieves an array of message responses filtered by messageId and timestamp. It starts with empty string and ends with empty string.
+      description: Retrieves an array of message responses filtered by messageId and timestamp.
       parameters:
         - in: query
           name: messageId
@@ -192,22 +192,25 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    message_id:
-                      type: string
-                      description: The ID of the message
-                      example: "110042ff-3842-4e98-a24c-23779cda0019"
-                    content:
-                      type: string
-                      description: The content of the message response
-                      example: "This is a response message."
-                    timestamp:
-                      type: integer
-                      description: The timestamp of the response in milliseconds since epoch
-                      example: 1625192932000
+                type: object
+                properties:
+                  message_id:
+                    type: string
+                    description: The ID of the message
+                    example: "110042ff-3842-4e98-a24c-23779cda0019"
+                  content:
+                    type: string
+                    description: The content of the message response
+                    example: "This is a response message."
+                  timestamp:
+                    type: integer
+                    description: The timestamp of the response in milliseconds since epoch
+                    example: 1625192932000
+                  ended:
+                    type: boolean
+                    description: Is stream ended?
+                    example: false
+
         '400':
           description: Invalid query parameters
           content:

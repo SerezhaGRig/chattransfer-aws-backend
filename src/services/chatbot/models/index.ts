@@ -8,6 +8,7 @@ import { getDataSourceInstance } from "../../../instances/dataSource";
 import { getConnectionParams } from "../../../config";
 import { personalityPreamble, responseFormat } from "./propts";
 import { getTools } from "../tools";
+import { markedToHtml } from "../helper";
 
 const model = new ChatOpenAI(
   { model: "gpt-4o" },
@@ -47,16 +48,31 @@ export const callModel = async (state: IState, config?: RunnableConfig) => {
   const streamRepo = dataSource.getRepository(MessageStream);
   // Iterate through each chunk of the streamed response
   const { message_id: messageId } = config.metadata;
+  let first = true;
   for await (const messageChunk of stream) {
     const { content } = messageChunk;
     console.info("content", content);
     if (typeof content === "string" && typeof messageId === "string") {
+      if (first && content === "") {
+        first = false;
+      }
       fullMessage += content; // Append each chunk to the full message
-      await streamRepo.insert({
-        message_id: messageId,
-        content,
-        timestamp: Date.now(),
-      });
+      try {
+        await streamRepo.upsert(
+          {
+            message_id: messageId,
+            content: (
+              await markedToHtml(fullMessage.replace(/```html\s*|```/g, ""))
+            ).replace("**", ""),
+            //           .replace(/<(\w+)(\s+[^>]*)?>\s*<\/\1>/g, ""),
+            ended: first === false && content === "",
+            timestamp: Date.now(),
+          },
+          ["message_id"],
+        );
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
   console.log("fullMessage", { fullMessage });
