@@ -5,9 +5,8 @@ import { healthInsurancePlans } from "./healthInsurancePlans";
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { getRetrieverToolsDynamic } from "./vectorStoreRetrieverToolDynamic";
 
-let tools: DynamicStructuredTool[] | undefined;
-
 export const getTools = async () => {
+  let tools: DynamicStructuredTool[] | undefined;
   if (tools === undefined) {
     try {
       const retrieverToolsDynamic = await getRetrieverToolsDynamic();
