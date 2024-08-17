@@ -32,8 +32,6 @@ const cleanHtml = (html: string) => {
 };
 
 export const markedToHtml = async (text: string) => {
-  const parsed = (await marked.parse(text))
-    .replace(/>\n</g, "><")
-    .replace(/\n$/g, "");
+  const parsed = await marked.parse(text);
   return cleanHtml(parsed);
 };
