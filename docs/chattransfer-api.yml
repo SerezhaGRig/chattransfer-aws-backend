@@ -181,7 +181,6 @@ paths:
           example: "110042ff-3842-4e98-a24c-23779cda0019"
         - in: query
           name: from
-          required: true
           schema:
             type: integer
             description: The starting timestamp (in milliseconds since epoch) to filter responses.
