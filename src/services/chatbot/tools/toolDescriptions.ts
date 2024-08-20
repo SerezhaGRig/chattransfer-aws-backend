@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+const { CONNECT_WITH_AGENT_DESCRIPTION, HEALTH_INSURANCE_PLANS_DESCRIPTION } =
+  process.env;
+
 const esToolDescriptions = [
   {
     source: "Notice of Benefit and Payment Parameters for 2025 Final Rule",
@@ -139,8 +142,7 @@ Informar al usuario:
   }),
 };
 const enHealthInsurancePlansToolDescription = {
-  description:
-    "Call if the user is interested in health insurance plans, need a suggestions related to health insurance plans or wants to buy a insurance plane. Ask details one by one in separate questions.",
+  description: HEALTH_INSURANCE_PLANS_DESCRIPTION,
   response: `If the user provides their ZIP code, append it to the URL as a query parameter for the zip_code field. The format should be:
 
 https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=XXXXX
@@ -211,8 +213,7 @@ const esConnectWithAgentToolDescription = {
   }),
 };
 const enConnectWithAgentToolDescription = {
-  description:
-    "Call if the user wants to  connect with agent. Let users know that the next generation of AI Insurance services is being built and will be available soon but in the meantime we can have a licensed insurance agent in their area follow up. Ask details one by one in separate questions.",
+  description: CONNECT_WITH_AGENT_DESCRIPTION,
   response:
     "Let users know that the next generation of AI Insurance services is being built and will be available soon but in the meantime we can have a licensed insurance agent in their area follow up. Inform the user that they will be contacted by a licensed insurance agent within the next ~24-48 hours.",
   schema: z.object({
