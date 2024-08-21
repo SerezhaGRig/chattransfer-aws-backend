@@ -8,7 +8,7 @@ type GetMessageResponseDeps = {
 export const buildGetMessageResponse =
   ({ streamRepo }: GetMessageResponseDeps) =>
   async (p: { messageId: string; from: number }) => {
-    const messages = streamRepo.findOne({
+    const messages = streamRepo.find({
       where: {
         message_id: p.messageId,
         timestamp: p.from && MoreThan(p.from),

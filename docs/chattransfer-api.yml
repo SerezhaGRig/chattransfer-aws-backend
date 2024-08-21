@@ -191,24 +191,30 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message_id:
-                    type: string
-                    description: The ID of the message
-                    example: "110042ff-3842-4e98-a24c-23779cda0019"
-                  content:
-                    type: string
-                    description: The content of the message response
-                    example: "This is a response message."
-                  timestamp:
-                    type: integer
-                    description: The timestamp of the response in milliseconds since epoch
-                    example: 1625192932000
-                  ended:
-                    type: boolean
-                    description: Is stream ended?
-                    example: false
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The ID of the message response part
+                      example: "110042ff-3842-4e98-a24c-23779cda0020"
+                    message_id:
+                      type: string
+                      description: The ID of the message
+                      example: "110042ff-3842-4e98-a24c-23779cda0019"
+                    content:
+                      type: string
+                      description: The content of the message response
+                      example: "This is a response message."
+                    timestamp:
+                      type: integer
+                      description: The timestamp of the response in milliseconds since epoch
+                      example: 1625192932000
+                    ended:
+                      type: boolean
+                      description: Is stream ended?
+                      example: false
 
         '400':
           description: Invalid query parameters

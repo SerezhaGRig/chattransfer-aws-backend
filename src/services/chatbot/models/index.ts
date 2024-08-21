@@ -58,18 +58,15 @@ export const callModel = async (state: IState, config?: RunnableConfig) => {
       }
       fullMessage += content; // Append each chunk to the full message
       try {
-        await streamRepo.upsert(
-          {
-            message_id: messageId,
-            content: (
-              await markedToHtml(fullMessage.replace(/```html\s*|```/g, ""))
-            ).replace("**", ""),
-            //           .replace(/<(\w+)(\s+[^>]*)?>\s*<\/\1>/g, ""),
-            ended: first === false && content === "",
-            timestamp: Date.now(),
-          },
-          ["message_id"],
-        );
+        await streamRepo.insert({
+          message_id: messageId,
+          content: (
+            await markedToHtml(fullMessage.replace(/```html\s*|```/g, ""))
+          ).replace("**", ""),
+          //           .replace(/<(\w+)(\s+[^>]*)?>\s*<\/\1>/g, ""),
+          ended: first === false && content === "",
+          timestamp: Date.now(),
+        });
       } catch (e) {
         console.error(e);
       }

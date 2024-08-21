@@ -1,8 +1,16 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: "message_stream" })
 export default class MessageStream {
-  @PrimaryColumn("uuid")
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
+
+  @Index()
+  @Column({
+    type: "varchar",
+    length: 255,
+    nullable: false,
+  })
   message_id: string;
 
   @Column({
@@ -18,7 +26,7 @@ export default class MessageStream {
   timestamp: number;
 
   @Column({
-    type: "boolean",
+    type: "bigint",
     nullable: false,
   })
   ended: boolean;
