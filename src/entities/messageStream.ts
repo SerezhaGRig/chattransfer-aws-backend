@@ -26,7 +26,7 @@ export default class MessageStream {
   timestamp: number;
 
   @Column({
-    type: "bigint",
+    type: "boolean",
     nullable: false,
   })
   ended: boolean;

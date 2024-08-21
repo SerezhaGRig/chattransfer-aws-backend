@@ -53,9 +53,6 @@ export const callModel = async (state: IState, config?: RunnableConfig) => {
     const { content } = messageChunk;
     console.info("content", content);
     if (typeof content === "string" && typeof messageId === "string") {
-      if (first && content === "") {
-        first = false;
-      }
       fullMessage += content; // Append each chunk to the full message
       try {
         await streamRepo.insert({
@@ -67,6 +64,9 @@ export const callModel = async (state: IState, config?: RunnableConfig) => {
           ended: first === false && content === "",
           timestamp: Date.now(),
         });
+        if (first && content === "") {
+          first = false;
+        }
       } catch (e) {
         console.error(e);
       }
