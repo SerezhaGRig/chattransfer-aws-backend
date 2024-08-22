@@ -2,7 +2,7 @@ Resources:
   RDSInstance:
     Type: AWS::RDS::DBInstance
     Properties:
-      DBInstanceIdentifier: chattransfer-rds-${self:provider.stage}
+      DBInstanceIdentifier: liveleads-rds-${self:provider.stage}
       DBName: ${self:provider.environment.DB_NAME}
       MasterUsername: ${self:provider.environment.DB_USERNAME}
       MasterUserPassword: ${self:provider.environment.DB_PASSWORD}
@@ -18,7 +18,7 @@ Resources:
   RDSProxy:
     Type: AWS::RDS::DBProxy
     Properties:
-      DBProxyName: chattransfer-db-proxy-${self:provider.stage}
+      DBProxyName: liveleads-db-proxy-${self:provider.stage}
       EngineFamily: POSTGRESQL
       RoleArn: !GetAtt RDSProxyRole.Arn
       Auth:
@@ -32,7 +32,7 @@ Resources:
       TargetGroupName: default
       DBProxyName: !Ref RDSProxy
       DBInstanceIdentifiers:
-        - chattransfer-rds-${self:provider.stage}
+        - liveleads-rds-${self:provider.stage}
   RDSProxyRole:
     Type: AWS::IAM::Role
     Properties:
@@ -52,8 +52,8 @@ Resources:
                 Action: "secretsmanager:GetSecretValue"
                 Resource: !Ref RDSSecret
               - Effect: Allow
-                Action: "chattransfer:Decrypt"
-                Resource: "arn:aws:chattransfer:${self:provider.region}:${aws:accountId}:key/*"
+                Action: "liveleads:Decrypt"
+                Resource: "arn:aws:liveleads:${self:provider.region}:${aws:accountId}:key/*"
                 Condition:
                   StringEquals:
-                    chattransfer:ViaService: "secretsmanager.${self:provider.region}.amazonaws.com"
+                    liveleads:ViaService: "secretsmanager.${self:provider.region}.amazonaws.com"
