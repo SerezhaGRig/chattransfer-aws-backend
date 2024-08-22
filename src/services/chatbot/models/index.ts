@@ -8,7 +8,6 @@ import { getDataSourceInstance } from "../../../instances/dataSource";
 import { getConnectionParams } from "../../../config";
 import { personalityPreamble, responseFormat } from "./propts";
 import { getTools } from "../tools";
-import { markedToHtml } from "../helper";
 
 const model = new ChatOpenAI(
   { model: "gpt-4o" },
@@ -57,9 +56,7 @@ export const callModel = async (state: IState, config?: RunnableConfig) => {
       try {
         await streamRepo.insert({
           message_id: messageId,
-          content: (
-            await markedToHtml(fullMessage.replace(/```html\s*|```/g, ""))
-          ).replace("**", ""),
+          content: fullMessage,
           //           .replace(/<(\w+)(\s+[^>]*)?>\s*<\/\1>/g, ""),
           ended: first === false && content === "",
           timestamp: Date.now(),
