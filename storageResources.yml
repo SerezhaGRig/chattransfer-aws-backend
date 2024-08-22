@@ -1,0 +1,6 @@
+Resources:
+  LiveLeadsConfigBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: ${self:custom.s3.liveLeadsConfigBucketName}
+      AccessControl: PublicRead
