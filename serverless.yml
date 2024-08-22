@@ -26,7 +26,7 @@ custom:
   esbuild:
     config: ./esbuild.config.js
   s3:
-    liveLeadsDocumentsBucketName: live-leads-bucket-${self:provider.stage}
+    liveLeadsDocumentsBucketName: live-leads-documents-bucket-${self:provider.stage}
     liveLeadsConfigBucketName: live-leads-config-${self:provider.stage}
 
 functions:
