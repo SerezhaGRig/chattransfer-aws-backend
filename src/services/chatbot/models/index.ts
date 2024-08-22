@@ -10,7 +10,7 @@ import { personalityPreamble, responseFormat } from "./propts";
 import { getTools } from "../tools";
 
 const model = new ChatOpenAI(
-  { model: "gpt-4o" },
+  { model: "gpt-4o-mini" },
   {
     httpAgent: new https.Agent({
       rejectUnauthorized: false,

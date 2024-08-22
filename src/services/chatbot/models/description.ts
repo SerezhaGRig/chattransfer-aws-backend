@@ -2,7 +2,7 @@ import { ChatOpenAI } from "@langchain/openai";
 import https from "node:https";
 
 export const descriptionModel = new ChatOpenAI(
-  { model: "gpt-4o" },
+  { model: "gpt-4o-mini" },
   {
     httpAgent: new https.Agent({
       rejectUnauthorized: false,
