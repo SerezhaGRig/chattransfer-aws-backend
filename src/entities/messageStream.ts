@@ -24,4 +24,10 @@ export default class MessageStream {
     nullable: false,
   })
   timestamp: number;
+
+  @Column({
+    type: "boolean",
+    nullable: false,
+  })
+  ended: boolean;
 }

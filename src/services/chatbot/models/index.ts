@@ -10,7 +10,7 @@ import { getConnectionParams } from "../../../config";
 import { personalityPreamble, responseFormat } from "./prompts";
 
 const model = new ChatOpenAI(
-  { model: "gpt-4o" },
+  { model: "gpt-4o-mini" },
   {
     httpAgent: new https.Agent({
       rejectUnauthorized: false,
@@ -22,7 +22,6 @@ const model = new ChatOpenAI(
     },
   },
 );
-const boundModel = model.bindTools(tools);
 
 export const callModel = async (state: IState, config?: RunnableConfig) => {
   console.log("colling model");
@@ -35,6 +34,8 @@ export const callModel = async (state: IState, config?: RunnableConfig) => {
     new SystemMessage({ content: responseFormat }),
     ...messages,
   ];
+  const tools = await getTools();
+  const boundModel = model.bindTools(tools);
   if (config.metadata.mode === "invoke") {
     const response = await boundModel.invoke(enhancedMessages, config);
     console.log("response", { response });
@@ -46,16 +47,26 @@ export const callModel = async (state: IState, config?: RunnableConfig) => {
   const streamRepo = dataSource.getRepository(MessageStream);
   // Iterate through each chunk of the streamed response
   const { message_id: messageId } = config.metadata;
+  let first = true;
   for await (const messageChunk of stream) {
     const { content } = messageChunk;
     console.info("content", content);
     if (typeof content === "string" && typeof messageId === "string") {
       fullMessage += content; // Append each chunk to the full message
-      await streamRepo.insert({
-        message_id: messageId,
-        content,
-        timestamp: Date.now(),
-      });
+      try {
+        await streamRepo.insert({
+          message_id: messageId,
+          content: fullMessage,
+          //           .replace(/<(\w+)(\s+[^>]*)?>\s*<\/\1>/g, ""),
+          ended: first === false && content === "",
+          timestamp: Date.now(),
+        });
+        if (first && content === "") {
+          first = false;
+        }
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
   console.log("fullMessage", { fullMessage });

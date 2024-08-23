@@ -1,4 +1,4 @@
-service: chattransfer
+service: liveleads
 frameworkVersion: '>=3.0.0 <4.0.0'
 
 
@@ -12,6 +12,8 @@ provider:
   region: us-east-1
   stage: ${self:custom.currentStage}
   timeout: 900
+  iam:
+    ${file(./serverless.role.yml)}
   httpApi:
     cors: true
   environment:
@@ -23,6 +25,9 @@ custom:
     tsConfigFileLocation: './tsconfig.json'
   esbuild:
     config: ./esbuild.config.js
+  s3:
+    liveLeadsDocumentsBucketName: live-leads-documents-bucket-${self:provider.stage}
+    liveLeadsConfigBucketName: live-leads-config-${self:provider.stage}
 
 functions:
   ${file(./serverless.functions.yml)}
@@ -31,3 +36,4 @@ stepFunctions:
 
 resources:
   - ${file(rdsResources.yml)}
+  - ${file(storageResources.yml)}

@@ -1,6 +1,7 @@
 import { MissingEnvException } from "../utils/errors";
 import Contact from "../entities/contact";
 import { getMigrations } from "../migrations";
+import Tool from "../entities/tool";
 import MessageStream from "../entities/messageStream";
 
 const dbConnectionData = () => ({
@@ -26,7 +27,7 @@ export const getConnectionParams = () => {
     type: "postgres" as const,
     logging: false,
     synchronize: false,
-    entities: [Contact, MessageStream],
+    entities: [Contact, Tool, MessageStream],
     migrations: [...getMigrations],
     migrationsTransactionMode: "each" as const,
   };
