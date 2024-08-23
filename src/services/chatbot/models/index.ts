@@ -2,12 +2,12 @@ import { ChatOpenAI } from "@langchain/openai";
 import { RunnableConfig } from "@langchain/core/runnables";
 import * as https from "node:https";
 import { AIMessage, SystemMessage } from "@langchain/core/messages";
-import { tools } from "../tools";
 import { IState } from "../types";
 import MessageStream from "../../../entities/messageStream";
 import { getDataSourceInstance } from "../../../instances/dataSource";
 import { getConnectionParams } from "../../../config";
 import { personalityPreamble, responseFormat } from "./prompts";
+import { getTools } from "../tools";
 
 const model = new ChatOpenAI(
   { model: "gpt-4o-mini" },
