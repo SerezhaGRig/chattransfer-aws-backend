@@ -12,6 +12,9 @@ provider:
   region: us-east-1
   stage: ${self:custom.currentStage}
   timeout: 900
+  vpc:
+    securityGroupIds: ${file(./serverless.env.yml):${self:provider.stage}.vpc.securityGroupIds}
+    subnetIds: ${file(./serverless.env.yml):${self:provider.stage}.vpc.privateSubnetIds}
   iam:
     ${file(./serverless.role.yml)}
   httpApi:

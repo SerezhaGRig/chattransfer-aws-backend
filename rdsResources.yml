@@ -25,7 +25,9 @@ Resources:
         - AuthScheme: SECRETS
           IAMAuth: DISABLED
           SecretArn: !Ref RDSSecret
-      VpcSubnetIds: ${file(./serverless.env.yml):${self:provider.stage}.vpc.publicSubnetIds}
+      VpcSubnetIds:
+        - ${file(./serverless.env.yml):${self:provider.stage}.vpc.publicSubnetIds}
+        - ${file(./serverless.env.yml):${self:provider.stage}.vpc.privateSubnetIds}
   RDSProxyTargetGroup:
     Type: AWS::RDS::DBProxyTargetGroup
     Properties:
