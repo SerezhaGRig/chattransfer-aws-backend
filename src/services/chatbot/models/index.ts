@@ -6,7 +6,7 @@ import { IState } from "../types";
 import MessageStream from "../../../entities/messageStream";
 import { getDataSourceInstance } from "../../../instances/dataSource";
 import { getConnectionParams } from "../../../config";
-import { personalityPreamble, responseFormat } from "./propts";
+import { personalityPreamble, responseFormat } from "./prompts";
 import { getTools } from "../tools";
 
 const model = new ChatOpenAI(
