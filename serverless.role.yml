@@ -4,3 +4,7 @@ role:
       Action:
         - s3:*
       Resource: "*"
+    - Effect: "Allow"
+      Action:
+        - ssm:*
+      Resource: "*"
