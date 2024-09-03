@@ -11,12 +11,12 @@ export const getTools = async () => {
     try {
       const retrieverToolsDynamic = await getRetrieverToolsDynamic();
       tools = [
-        healthInsurancePlans,
-        connectWithAgent,
+        await healthInsurancePlans(),
+        await connectWithAgent(),
         ...retrieverToolsDynamic,
       ];
     } catch (e) {
-      tools = [healthInsurancePlans, connectWithAgent];
+      tools = [await healthInsurancePlans(), await connectWithAgent()];
     }
   }
   return tools;

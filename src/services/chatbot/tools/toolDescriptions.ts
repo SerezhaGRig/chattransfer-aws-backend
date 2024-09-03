@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { getSSMParam } from "../../../utils/ssm/getParam";
 
 const { CONNECT_WITH_AGENT_DESCRIPTION, HEALTH_INSURANCE_PLANS_DESCRIPTION } =
   process.env;
@@ -102,7 +103,7 @@ export const toolDescriptions: {
 }[] =
   process.env.BOT_NLANGUAGE === "es" ? esToolDescriptions : enToolDescriptions;
 
-const esHealthInsurancePlansToolDescription = {
+const esHealthInsurancePlansToolDescription = async () => ({
   description:
     "Llamar si el usuario está interesado en planes de seguro médico, necesita sugerencias relacionadas con planes de seguro médico o quiere comprar un seguro de avión. Pregunte los detalles uno por uno en preguntas separadas.",
   response: `Si el usuario proporciona su código postal, añádalo a la URL como parámetro de consulta para el campo zip_code. El formato debe ser:
@@ -140,9 +141,10 @@ Informar al usuario:
         "El estado de consumo de tabaco del cliente puede ser verdadero o falso.",
       ),
   }),
-};
-const enHealthInsurancePlansToolDescription = {
-  description: HEALTH_INSURANCE_PLANS_DESCRIPTION,
+});
+
+const enHealthInsurancePlansToolDescription = async () => ({
+  description: await getSSMParam(HEALTH_INSURANCE_PLANS_DESCRIPTION),
   response: `If the user provides their ZIP code, append it to the URL as a query parameter for the zip_code field. The format should be:
 
 https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=XXXXX
@@ -174,14 +176,15 @@ Inform the User:
       .boolean()
       .describe("tobacco use status of customer it can be true or false"),
   }),
+});
+
+export const healthInsurancePlansToolDescription = async () => {
+  return process.env.BOT_NLANGUAGE === "es"
+    ? await esHealthInsurancePlansToolDescription()
+    : await enHealthInsurancePlansToolDescription();
 };
 
-export const healthInsurancePlansToolDescription =
-  process.env.BOT_NLANGUAGE === "es"
-    ? esHealthInsurancePlansToolDescription
-    : enHealthInsurancePlansToolDescription;
-
-const esConnectWithAgentToolDescription = {
+const esConnectWithAgentToolDescription = async () => ({
   description:
     "Llamar si el usuario desea comunicarse con el agente. Informar a los usuarios que se está desarrollando la próxima generación de servicios de seguros con inteligencia artificial y que estará disponible pronto, pero mientras tanto, podemos hacer que un agente de seguros autorizado de su área haga un seguimiento. Pregunte los detalles uno por uno en preguntas separadas.",
   response:
@@ -211,9 +214,9 @@ const esConnectWithAgentToolDescription = {
         "Solicitar al usuario su número de teléfono si el usuario acepta recopilar información de contacto",
       ),
   }),
-};
-const enConnectWithAgentToolDescription = {
-  description: CONNECT_WITH_AGENT_DESCRIPTION,
+});
+const enConnectWithAgentToolDescription = async () => ({
+  description: await getSSMParam(CONNECT_WITH_AGENT_DESCRIPTION),
   response:
     "Let users know that the next generation of AI Insurance services is being built and will be available soon but in the meantime we can have a licensed insurance agent in their area follow up. Inform the user that they will be contacted by a licensed insurance agent within the next ~24-48 hours.",
   schema: z.object({
@@ -238,9 +241,10 @@ const enConnectWithAgentToolDescription = {
         "ask user for his/her phone number if user gives his/her agreement to collect contact information",
       ),
   }),
-};
+});
 
-export const connectWithAgentToolDescription =
-  process.env.BOT_NLANGUAGE === "es"
-    ? esConnectWithAgentToolDescription
-    : enConnectWithAgentToolDescription;
+export const connectWithAgentToolDescription = async () => {
+  return process.env.BOT_NLANGUAGE === "es"
+    ? await esConnectWithAgentToolDescription()
+    : await enConnectWithAgentToolDescription();
+};

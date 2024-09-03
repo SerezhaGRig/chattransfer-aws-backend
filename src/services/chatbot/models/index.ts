@@ -30,7 +30,7 @@ export const callModel = async (state: IState, config?: RunnableConfig) => {
   const { messages } = state;
   console.info("state", { state });
   const enhancedMessages = [
-    new SystemMessage({ content: personalityPreamble }),
+    new SystemMessage({ content: await personalityPreamble() }),
     new SystemMessage({ content: responseFormat }),
     ...messages,
   ];
