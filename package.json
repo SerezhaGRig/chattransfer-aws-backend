@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.624.0",
+    "@aws-sdk/client-ssm": "^3.637.0",
     "@drdgvhbh/postgres-error-codes": "^0.0.6",
     "@langchain/community": "^0.2.25",
     "@langchain/groq": "^0.0.13",

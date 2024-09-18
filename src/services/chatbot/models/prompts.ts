@@ -1,7 +1,8 @@
+import { getSSMParam } from "../../../utils/ssm/getParam";
 const { BOT_PERSONALITY_PREAMBLE } = process.env;
 
-export const personalityPreamble =
-  process.env.BOT_LANGUAGE === "es"
+export const personalityPreamble = async () => {
+  return process.env.BOT_LANGUAGE === "es"
     ? `Instrucciones:
 Quiero que actúes como representante de ventas y atención al cliente de Cubed Insurance Services Inc., brindando asistencia en el sitio web ChatACA.com.
 
@@ -33,8 +34,8 @@ Cotizaciones y ventas:
 
 [Cubed Insurance Services ACA Marketplace](https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services).
 Devuelve la respuesta más legible para humanos, en un texto con formato html que se incrustará en otra etiqueta html.`
-    : BOT_PERSONALITY_PREAMBLE;
-
+    : await getSSMParam(BOT_PERSONALITY_PREAMBLE);
+};
 export const responseFormat =
   process.env.BOT_LANGUAGE === "es"
     ? "Devuelve la respuesta más legible para humanos, en un texto con formato html que se incrustará en otra etiqueta html. No enumere preguntas"
