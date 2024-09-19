@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import Bot from "./bot";
 import ToolSchemaProperty from "./toolSchemaPropery";
+import ToolSchemaResponse from "./toolSchemaResponse";
 
 export enum ToolTypes {
   DOCUMENT = "DOCUMENT",
@@ -49,6 +50,16 @@ export default class Tool {
   )
   @JoinColumn()
   tool_schema_properties: ToolSchemaProperty[];
+
+  @OneToMany(
+    "tool_schema_property",
+    (toolResp: ToolSchemaResponse) => toolResp.tool,
+    {
+      cascade: ["insert", "update", "remove", "recover"],
+    },
+  )
+  @JoinColumn()
+  tool_schema_responses: ToolSchemaResponse[];
 
   @Column({
     type: "enum",

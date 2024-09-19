@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  Index,
   JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -12,6 +13,7 @@ export default class Bot {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
+  @Index()
   @Column({
     type: "varchar",
     length: 255,
