@@ -23,3 +23,8 @@ export const botConfigSchema = z
   })
   .strict();
 export type BotConfigSchemaType = z.infer<typeof botConfigSchema>;
+export const deleteBotPathParams = z
+  .object({
+    botName: z.string(),
+  })
+  .strict();

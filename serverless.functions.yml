@@ -99,3 +99,13 @@ upsertBotConfig:
           origin: '*'
           headers:
             - '*'
+deleteBotConfig:
+  handler: src/lambdas/chatbot/config/delete.handler
+  events:
+    - http:
+        path: /chatbot/{botName}/config
+        method: POST
+        cors:
+          origin: '*'
+          headers:
+            - '*'
