@@ -73,4 +73,9 @@ export default class Tool {
     nullable: false,
   })
   description: string;
+  @Column({
+    type: "text",
+    nullable: true,
+  })
+  response: string;
 }

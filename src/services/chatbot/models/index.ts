@@ -29,8 +29,14 @@ export const callModel = async (state: IState, config?: RunnableConfig) => {
   console.info("config", config);
   const { messages } = state;
   console.info("state", { state });
+  const botName = config?.metadata?.bot_name;
   const enhancedMessages = [
-    new SystemMessage({ content: await personalityPreamble() }),
+    new SystemMessage({
+      content:
+        typeof botName === "string"
+          ? await personalityPreamble(botName)
+          : await personalityPreamble(),
+    }),
     new SystemMessage({ content: responseFormat }),
     ...messages,
   ];

@@ -5,6 +5,7 @@ import { createWorkflow } from "./workflow";
 import { markedToHtml } from "./helper";
 
 export const sendMessage = async (
+  botName: string,
   message: {
     text: string;
     id?: string;
@@ -16,7 +17,12 @@ export const sendMessage = async (
   const workflow = await createWorkflow();
   const app = workflow.compile({ checkpointer });
   const config = {
-    configurable: { thread_id: threadId, message_id: message.id, mode },
+    configurable: {
+      thread_id: threadId,
+      message_id: message.id,
+      bot_name: botName,
+      mode,
+    },
   };
   const inputs = { messages: [new HumanMessage({ content: message.text })] };
 

@@ -24,6 +24,14 @@ export const vectorStore = new WeaviateStore(new OpenAIEmbeddings(), {
   textKey: "text",
 });
 
+export const getVectorStoreDynamic = async (indexName: string) => {
+  return new WeaviateStore(new OpenAIEmbeddings(), {
+    client,
+    indexName,
+    textKey: "text",
+  });
+};
+
 export const loadVectorStore = async () => {
   await vectorStore.delete({
     filter: {
