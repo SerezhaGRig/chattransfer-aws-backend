@@ -2,7 +2,6 @@ import {
   Column,
   Entity,
   Index,
-  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -24,6 +23,5 @@ export default class Bot {
   @OneToMany("tool", (tool: Tool) => tool.bot, {
     cascade: ["insert", "update", "remove", "recover"],
   })
-  @JoinColumn()
   tools: Tool[];
 }

@@ -77,3 +77,25 @@ streamMessageResponseTask:
   environment:
     BOT_LANGUAGE: multilang
   timeout: 900
+
+getBotsConfig:
+  handler: src/lambdas/chatbot/config/get.handler
+  events:
+    - http:
+        path: /chatbot/config
+        method: GET
+        cors:
+          origin: '*'
+          headers:
+            - '*'
+
+upsertBotConfig:
+  handler: src/lambdas/chatbot/config/upsert.handler
+  events:
+    - http:
+        path: /chatbot/config
+        method: POST
+        cors:
+          origin: '*'
+          headers:
+            - '*'

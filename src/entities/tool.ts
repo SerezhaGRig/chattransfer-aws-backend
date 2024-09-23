@@ -39,7 +39,7 @@ export default class Tool {
     length: 255,
     nullable: true,
   })
-  source: string;
+  source: string | undefined;
 
   @OneToMany(
     "tool_schema_property",
@@ -48,17 +48,15 @@ export default class Tool {
       cascade: ["insert", "update", "remove", "recover"],
     },
   )
-  @JoinColumn()
   tool_schema_properties: ToolSchemaProperty[];
 
   @OneToMany(
-    "tool_schema_property",
+    "tool_schema_response",
     (toolResp: ToolSchemaResponse) => toolResp.tool,
     {
       cascade: ["insert", "update", "remove", "recover"],
     },
   )
-  @JoinColumn()
   tool_schema_responses: ToolSchemaResponse[];
 
   @Column({
