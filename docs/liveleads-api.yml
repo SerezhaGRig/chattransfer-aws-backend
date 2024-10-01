@@ -288,3 +288,176 @@ paths:
                   message:
                     type: string
                     example: "Internal server error"
+  /chatbot/config:
+    get:
+      summary: Get all chatbot configurations
+      description: Fetches the configuration for all bots.
+      responses:
+        '200':
+          description: Successfully retrieved bot configurations.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: Bot UUID.
+                        name:
+                          type: string
+                          description: Name of the bot.
+                        tools:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                                description: Name of the tool.
+                              type:
+                                type: string
+                                description: Tool type (e.g., FUNCTION, DOCUMENT).
+                              description:
+                                type: string
+                                description: Tool description.
+                              response:
+                                type: string
+                                description: Default response for the tool.
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Internal server error"
+
+    post:
+      summary: Create or update a bot configuration
+      description: Creates a new bot configuration or updates an existing one.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                botName:
+                  type: string
+                  description: Name of the bot.
+                tools:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: Name of the tool.
+                      type:
+                        type: string
+                        description: Tool type (e.g., FUNCTION, DOCUMENT).
+                      description:
+                        type: string
+                        description: Tool description.
+                      response:
+                        type: string
+                        description: Default response for the tool.
+                      props:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              description: Property name.
+                            type:
+                              type: string
+                              description: Property type (e.g., STRING, DOCUMENT).
+                            description:
+                              type: string
+                              description: Property description.
+              required:
+                - botName
+                - tools
+      responses:
+        '200':
+          description: Successfully created or updated bot configuration.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Bot configuration successfully created or updated."
+        '400':
+          description: Invalid input.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Invalid input"
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Internal server error"
+
+  /chatbot/{botName}/config:
+    delete:
+      summary: Delete a bot configuration
+      description: Deletes the configuration for a specific bot by name.
+      parameters:
+        - in: path
+          name: botName
+          required: true
+          schema:
+            type: string
+            description: The name of the bot to delete the configuration for.
+      responses:
+        '200':
+          description: Successfully deleted bot configuration.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Bot configuration successfully deleted."
+        '400':
+          description: Invalid bot name.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Invalid bot name"
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Internal server error"
