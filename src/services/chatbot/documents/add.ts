@@ -9,11 +9,11 @@ import os from "os";
 import * as fs from "node:fs";
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { Readable } from "stream";
-import { vectorStore } from "../vectorStore";
 import { getDataSourceInstance } from "../../../instances/dataSource";
 import { getConnectionParams } from "../../../config";
 import Tool from "../../../entities/tool";
 import { generateDescription } from "../tools/helpers";
+import { getVectorStoreDynamic } from "../vectorStore";
 const { LIVE_LEADS_DOCUMENTS_BUCKET_NAME } = process.env;
 
 const client = new S3Client();
@@ -21,6 +21,8 @@ const client = new S3Client();
 export const addFileIntoVectorStoreFromS3 = async (s3Key: string) => {
   const key = decodeURIComponent(s3Key.replace(/\+/g, " "));
   const fileName = p.basename(key);
+  const dirPath = p.dirname(key);
+  const lastFolderName = p.basename(dirPath);
 
   // Create a unique temporary directory
   const appPrefix = "live-leads";
@@ -64,6 +66,8 @@ export const addFileIntoVectorStoreFromS3 = async (s3Key: string) => {
     ...doc,
     metadata: { ...doc.metadata, timestamp, pdf: undefined },
   }));
+  const dataSource = await getDataSourceInstance(getConnectionParams());
+  const vectorStore = await getVectorStoreDynamic(lastFolderName);
   await vectorStore.addDocuments(docsToLoad);
   const name = fileName
     .split(".")[0]
@@ -76,7 +80,6 @@ export const addFileIntoVectorStoreFromS3 = async (s3Key: string) => {
       .slice(0, 3)
       .join(),
   );
-  const dataSource = await getDataSourceInstance(getConnectionParams());
   await dataSource.getRepository(Tool).insert({
     source: fileName,
     name,

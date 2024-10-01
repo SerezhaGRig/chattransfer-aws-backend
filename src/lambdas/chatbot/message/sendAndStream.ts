@@ -7,6 +7,7 @@ export const logic = async (event: SendMessageParams) => {
   console.info("event", event);
   const p = sendMessageAndStreamSchema.parse(event);
   const result = await sendMessage(
+    p.botName,
     {
       text: p.message,
       id: p.messageId,

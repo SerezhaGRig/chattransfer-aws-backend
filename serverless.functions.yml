@@ -11,19 +11,6 @@ sendMessage:
           headers:
             - '*'
 
-sendMessageEs:
-  handler: src/lambdas/chatbot/message/send.handler
-  environment:
-    BOT_LANGUAGE: es
-  events:
-    - http:
-        path: /es/send/message
-        method: POST
-        cors:
-          origin: '*'
-          headers:
-            - '*'
-
 sendMessageMultilang:
   handler: src/lambdas/chatbot/message/send.handler
   environment:
@@ -90,3 +77,35 @@ streamMessageResponseTask:
   environment:
     BOT_LANGUAGE: multilang
   timeout: 900
+
+getBotsConfig:
+  handler: src/lambdas/chatbot/config/get.handler
+  events:
+    - http:
+        path: /chatbot/config
+        method: GET
+        cors:
+          origin: '*'
+          headers:
+            - '*'
+
+upsertBotConfig:
+  handler: src/lambdas/chatbot/config/upsert.handler
+  events:
+    - http:
+        path: /chatbot/config
+        method: POST
+        cors:
+          origin: '*'
+          headers:
+            - '*'
+deleteBotConfig:
+  handler: src/lambdas/chatbot/config/delete.handler
+  events:
+    - http:
+        path: /chatbot/{botName}/config
+        method: POST
+        cors:
+          origin: '*'
+          headers:
+            - '*'

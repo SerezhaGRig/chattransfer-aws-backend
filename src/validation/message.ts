@@ -4,6 +4,7 @@ export const sendMessageRequestBodySchema = z
   .object({
     message: z.string(),
     conversationId: z.string().uuid(),
+    botName: z.string(),
   })
   .strict();
 
@@ -12,6 +13,7 @@ export const sendMessageAndStreamSchema = z
     message: z.string(),
     conversationId: z.string().uuid(),
     messageId: z.string().uuid(),
+    botName: z.string(),
   })
   .strict();
 

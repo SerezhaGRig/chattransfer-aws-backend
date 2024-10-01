@@ -4,52 +4,6 @@ import { getSSMParam } from "../../../utils/ssm/getParam";
 const { CONNECT_WITH_AGENT_DESCRIPTION, HEALTH_INSURANCE_PLANS_DESCRIPTION } =
   process.env;
 
-const esToolDescriptions = [
-  {
-    source: "Notice of Benefit and Payment Parameters for 2025 Final Rule",
-    name: "notice-of-benefit-and-payment-parameters-for-2025-final-rule",
-    description:
-      "La Ley Pública 111-148 exige que el resumen de beneficios y cobertura de los planes de salud se presente en un formato uniforme, que no exceda las 4 páginas y utilice una fuente de al menos 12 puntos, y de manera cultural y lingüísticamente apropiada para el afiliado promedio del plan. El resumen debe incluir elementos clave como definiciones uniformes de términos de seguros, descripciones de cobertura y costos compartidos, excepciones y limitaciones, disposiciones de renovabilidad, etiquetas de hechos de cobertura e información de contacto para más consultas.",
-  },
-  {
-    source: "ACA Law act",
-    name: "aca-law-act",
-    description:
-      "Esta publicación explica cómo reclamar la deducción detallada por gastos médicos y dentales en el Anexo A (Formulario 1040), incluyendo qué gastos califican, cómo manejar los reembolsos y cómo reportar la deducción. También proporciona orientación sobre temas relacionados, como gastos laborales relacionados con discapacidades, primas de seguro de salud para autónomos y cómo buscar más asistencia tributaria.",
-  },
-  {
-    source: "Medicaid & Dental benefits",
-    name: "medicaid-dental-benefits",
-    description:
-      "La atención médica preventiva, incluidas las evaluaciones, chequeos y asesoramiento, es esencial para prevenir y detectar enfermedades temprano cuando el tratamiento es más efectivo, y para promover el bienestar general a través de elecciones de estilo de vida saludables. Tener un proveedor de confianza puede ayudarlo a obtener los servicios preventivos adecuados, mejorar su salud mental y emocional, y alcanzar sus objetivos de bienestar, mientras que mantener su información de salud organizada y segura también es crucial.",
-  },
-  {
-    source: "From coverage to Care",
-    name: "coverage-to-care",
-    description:
-      'Una red de proveedores es una lista de médicos, proveedores de atención médica y hospitales con los que un plan de salud tiene contratos para ofrecer atención médica a sus miembros, conocidos como "proveedores de red" o "proveedores dentro de la red". Para ver si su médico está en la red de un plan antes de elegir un plan del Mercado de Seguros de Salud®, haga una lista de sus proveedores, busque la red de proveedores para cada plan específico o llame al servicio al cliente de la compañía de seguros y compare planes en HealthCare.gov.',
-  },
-  {
-    source: "What you should know about providers",
-    name: "provider-info",
-    description:
-      "El contenido de este documento está destinado a proporcionar claridad sobre los requisitos legales existentes y no tiene fuerza de ley a menos que se incorpore en un contrato, y no reemplazará ningún requisito estatal o de emisores de QHP para pagos de comisiones. Los agentes y corredores que asisten a los consumidores con la cobertura del Mercado deben documentar el consentimiento del consumidor antes de acceder a su información, con varios formatos aceptables para la documentación, y este modelo de formulario de consentimiento sirve como ejemplo para la documentación física con firmas autógrafas.",
-  },
-  {
-    source:
-      "Patient Protection and Affordable Care Act, HHS Notice of Benefit and Payment Parameters for 2024",
-    name: "aca-hhs-2024",
-    description:
-      "El Aviso de HHS sobre Parámetros de Beneficios y Pagos para la regla final de 2025, publicado por CMS, establece nuevos estándares para emisores y Mercados e incluye políticas que impactan Medicaid, CHIP y el Programa de Salud Básica. Estos cambios tienen como objetivo avanzar en la equidad en salud al aumentar el acceso a los servicios de salud, simplificar la elección, mejorar la selección de planes y mejorar las protecciones al consumidor.",
-  },
-  {
-    source: "regs to implement equal employemnt provision",
-    name: "equal-employment-regs",
-    description:
-      "La EEOC ha emitido regulaciones finales revisadas y orientación interpretativa para implementar la Ley de Enmiendas de ADA de 2008, que mejora la aplicación del título I de la ADA que prohíbe la discriminación laboral basada en discapacidades. Estas regulaciones entrarán en vigor el 24 de mayo de 2011, y se puede obtener más información contactando a la Oficina de Asesoría Legal de la EEOC.",
-  },
-];
-
 const enToolDescriptions = [
   {
     source: "Notice of Benefit and Payment Parameters for 2025 Final Rule",
@@ -100,48 +54,7 @@ export const toolDescriptions: {
   source: string;
   description: string;
   name: string;
-}[] =
-  process.env.BOT_NLANGUAGE === "es" ? esToolDescriptions : enToolDescriptions;
-
-const esHealthInsurancePlansToolDescription = async () => ({
-  description:
-    "Llamar si el usuario está interesado en planes de seguro médico, necesita sugerencias relacionadas con planes de seguro médico o quiere comprar un seguro de avión. Pregunte los detalles uno por uno en preguntas separadas.",
-  response: `Si el usuario proporciona su código postal, añádalo a la URL como parámetro de consulta para el campo zip_code. El formato debe ser:
-
-https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=XXXXX
-
-Reemplace XXXXX con el código postal del usuario.
-
-Por ejemplo, si el usuario proporciona el código postal 12345, la URL sería:
-
-https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=12345
-
-Puede incluir un mensaje como:
-
-"Para explorar las opciones de atención médica de la ACA y comenzar con el proceso de solicitud, visite nuestro mercado aquí: [Cubed Insurance Services ACA Marketplace](https://www.healthsherpa.com/?_agent_id=Cubed_Insurance_Services&zip_code=XXXXX)
-
-Asegúrese de reemplazar XXXXX con el código postal real proporcionado por el usuario.
-Informar al usuario:
-- Si un cliente desea conectarse directamente con un agente de seguros, informe a los usuarios que se está desarrollando la próxima generación de servicios de seguros con inteligencia artificial y que estará disponible pronto, pero mientras tanto, podemos hacer que un agente de seguros autorizado en su área realice un seguimiento.`,
-  schema: z.object({
-    zipcode: z
-      .string()
-      .describe("El código postal del cliente debe tener 5 dígitos"),
-    age: z.string().describe("Edad de la cliente"),
-    householdSize: z.string().describe("Tamaño del hogar del cliente"),
-    householdIncome: z.string().describe("Ingresos familiares de la cliente"),
-    effectiveDate: z
-      .string()
-      .describe(
-        "La fecha efectiva para el cliente debe ser el primer día de cualquier mes.",
-      ),
-    tobaccoUse: z
-      .boolean()
-      .describe(
-        "El estado de consumo de tabaco del cliente puede ser verdadero o falso.",
-      ),
-  }),
-});
+}[] = enToolDescriptions;
 
 const enHealthInsurancePlansToolDescription = async () => ({
   description: await getSSMParam(HEALTH_INSURANCE_PLANS_DESCRIPTION),
@@ -179,42 +92,9 @@ Inform the User:
 });
 
 export const healthInsurancePlansToolDescription = async () => {
-  return process.env.BOT_NLANGUAGE === "es"
-    ? await esHealthInsurancePlansToolDescription()
-    : await enHealthInsurancePlansToolDescription();
+  return await enHealthInsurancePlansToolDescription();
 };
 
-const esConnectWithAgentToolDescription = async () => ({
-  description:
-    "Llamar si el usuario desea comunicarse con el agente. Informar a los usuarios que se está desarrollando la próxima generación de servicios de seguros con inteligencia artificial y que estará disponible pronto, pero mientras tanto, podemos hacer que un agente de seguros autorizado de su área haga un seguimiento. Pregunte los detalles uno por uno en preguntas separadas.",
-  response:
-    "Informar a los usuarios de que se está desarrollando la próxima generación de servicios de seguros con inteligencia artificial y que estará disponible pronto, pero que, mientras tanto, podemos hacer que un agente de seguros autorizado de su zona haga un seguimiento. Informar al usuario de que un agente de seguros autorizado se pondrá en contacto con él en las próximas 24 a 48 horas.",
-  schema: z.object({
-    agreement: z
-      .boolean()
-      .describe(
-        "Pide permiso para recopilar información de contacto para contactarlos más tarde. Es verdadero si el usuario da su consentimiento; de lo contrario, es falso.",
-      ),
-    name: z
-      .string()
-      .optional()
-      .describe(
-        "Solicitar el nombre del usuario si éste acepta recopilar información de contacto",
-      ),
-    email: z
-      .string()
-      .optional()
-      .describe(
-        "Solicitar al usuario su correo electrónico si el usuario da su consentimiento para recopilar información de contacto",
-      ),
-    phoneNumber: z
-      .string()
-      .optional()
-      .describe(
-        "Solicitar al usuario su número de teléfono si el usuario acepta recopilar información de contacto",
-      ),
-  }),
-});
 const enConnectWithAgentToolDescription = async () => ({
   description: await getSSMParam(CONNECT_WITH_AGENT_DESCRIPTION),
   response:
@@ -244,7 +124,5 @@ const enConnectWithAgentToolDescription = async () => ({
 });
 
 export const connectWithAgentToolDescription = async () => {
-  return process.env.BOT_NLANGUAGE === "es"
-    ? await esConnectWithAgentToolDescription()
-    : await enConnectWithAgentToolDescription();
+  return enConnectWithAgentToolDescription();
 };

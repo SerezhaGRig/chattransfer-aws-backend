@@ -1,11 +1,15 @@
-import { vectorStore } from "../vectorStore";
+import { getVectorStoreDynamic } from "../vectorStore";
 import { getDataSourceInstance } from "../../../instances/dataSource";
 import { getConnectionParams } from "../../../config";
 import Tool from "../../../entities/tool";
 import * as p from "path";
 
 export const deleteFileFromVectorStore = async (s3Key: string) => {
-  const fileName = p.basename(decodeURIComponent(s3Key.replace(/\+/g, " ")));
+  const key = decodeURIComponent(s3Key.replace(/\+/g, " "));
+  const fileName = p.basename(key);
+  const dirPath = p.dirname(key);
+  const lastFolderName = p.basename(dirPath);
+  const vectorStore = await getVectorStoreDynamic(lastFolderName);
   await vectorStore.delete({
     filter: {
       where: {
