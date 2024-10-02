@@ -1,8 +1,11 @@
 import { MissingEnvException } from "../utils/errors";
-import Contact from "../entities/contact";
 import { getMigrations } from "../migrations";
 import Tool from "../entities/tool";
 import MessageStream from "../entities/messageStream";
+import Bot from "../entities/bot";
+import ToolSchemaResponse from "../entities/toolSchemaResponse";
+import ToolSchemaProperty from "../entities/toolSchemaPropery";
+import Contact from "../entities/contact";
 
 const dbConnectionData = () => ({
   host: process.env.DB_HOST,
@@ -27,7 +30,15 @@ export const getConnectionParams = () => {
     type: "postgres" as const,
     logging: false,
     synchronize: false,
-    entities: [Contact, Tool, MessageStream],
+    entities: [
+      Contact,
+      Tool,
+      MessageStream,
+      Bot,
+      Tool,
+      ToolSchemaResponse,
+      ToolSchemaProperty,
+    ],
     migrations: [...getMigrations],
     migrationsTransactionMode: "each" as const,
   };
