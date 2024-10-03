@@ -42,7 +42,7 @@ export const callModel = async (state: IState, config?: RunnableConfig) => {
   ];
   const tools =
     typeof botName === "string" ? await getTools(botName) : await getTools();
-  const boundModel = model.bindTools(tools);
+  const boundModel = tools.length > 0 ? model.bindTools(tools) : model;
   if (config.metadata.mode === "invoke") {
     const response = await boundModel.invoke(enhancedMessages, config);
     console.log("response", { response });

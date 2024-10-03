@@ -308,7 +308,7 @@ paths:
                         id:
                           type: string
                           format: uuid
-                          description: Bot UUID.
+                          description: Unique identifier of the bot.
                         name:
                           type: string
                           description: Name of the bot.
@@ -317,18 +317,45 @@ paths:
                           items:
                             type: object
                             properties:
+                              id:
+                                type: string
+                                format: uuid
+                                description: Unique identifier of the tool.
                               name:
                                 type: string
                                 description: Name of the tool.
+                              source:
+                                type: string
+                                nullable: true
+                                description: The source file or document linked to the tool, if applicable.
+                              tool_schema_properties:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: string
+                                      format: uuid
+                                      description: Unique identifier of the tool schema property.
+                                    name:
+                                      type: string
+                                      description: Name of the schema property.
+                                    type:
+                                      type: string
+                                      description: Type of the schema property (e.g., string, number).
+                                    description:
+                                      type: string
+                                      description: Description of the schema property.
                               type:
                                 type: string
-                                description: Tool type (e.g., FUNCTION, DOCUMENT).
+                                description: Type of the tool (e.g., FUNCTION, DOCUMENT).
                               description:
                                 type: string
-                                description: Tool description.
+                                description: Detailed description of the tool.
                               response:
                                 type: string
-                                description: Default response for the tool.
+                                nullable: true
+                                description: Default response when using the tool.
         '500':
           description: Server error.
           content:
@@ -353,6 +380,7 @@ paths:
                 botName:
                   type: string
                   description: Name of the bot.
+                  example: testBot
                 tools:
                   type: array
                   items:
@@ -361,15 +389,19 @@ paths:
                       name:
                         type: string
                         description: Name of the tool.
+                        example: insurance-tool
                       type:
                         type: string
                         description: Tool type (e.g., FUNCTION, DOCUMENT).
+                        example: FUNCTION
                       description:
                         type: string
-                        description: Tool description.
+                        description: Detailed description of the tool.
+                        example: call when user wants insurance or interested for insurance
                       response:
                         type: string
-                        description: Default response for the tool.
+                        description: Default response for the tool when invoked.
+                        example: tell that we will contact to them
                       props:
                         type: array
                         items:
@@ -377,13 +409,16 @@ paths:
                           properties:
                             name:
                               type: string
-                              description: Property name.
+                              description: Name of the property.
+                              example: householdIncome
                             type:
                               type: string
-                              description: Property type (e.g., STRING, DOCUMENT).
+                              description: Type of the property (e.g., STRING, DOCUMENT).
+                              example: string
                             description:
                               type: string
-                              description: Property description.
+                              description: Detailed description of the property.
+                              example: household income of customer
               required:
                 - botName
                 - tools
