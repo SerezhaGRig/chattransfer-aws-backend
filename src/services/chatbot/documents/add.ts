@@ -14,6 +14,7 @@ import { getConnectionParams } from "../../../config";
 import Tool from "../../../entities/tool";
 import { generateDescription } from "../tools/helpers";
 import { getVectorStoreDynamic } from "../vectorStore";
+import Bot from "../../../entities/bot";
 const { LIVE_LEADS_DOCUMENTS_BUCKET_NAME } = process.env;
 
 const client = new S3Client();
@@ -80,9 +81,17 @@ export const addFileIntoVectorStoreFromS3 = async (s3Key: string) => {
       .slice(0, 3)
       .join(),
   );
+  const bot = await dataSource.getRepository(Bot).findOne({
+    where: {
+      name: lastFolderName,
+    },
+  });
   await dataSource.getRepository(Tool).insert({
     source: fileName,
     name,
+    bot: bot?.id && {
+      id: bot?.id,
+    },
     description: description.slice(0, 1023),
   });
 };
