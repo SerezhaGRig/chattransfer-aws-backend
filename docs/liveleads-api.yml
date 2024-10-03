@@ -413,7 +413,7 @@ paths:
                               example: householdIncome
                             type:
                               type: string
-                              description: Type of the property (e.g., STRING, DOCUMENT).
+                              description: Type of the property (e.g., string, boolean, number).
                               example: string
                             description:
                               type: string
