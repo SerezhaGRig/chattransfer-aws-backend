@@ -17,6 +17,7 @@ export default class Bot {
     type: "varchar",
     length: 255,
     nullable: false,
+    unique: true,
   })
   name: string;
 

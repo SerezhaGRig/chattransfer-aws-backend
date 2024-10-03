@@ -10,10 +10,16 @@ export const botConfigSchema = z
         name: z.string(),
         description: z.string(),
         response: z.string(),
-        type: z.string().default(ToolTypes.FUNCTION),
+        type: z
+          .enum([ToolTypes.FUNCTION, ToolTypes.DOCUMENT])
+          .default(ToolTypes.FUNCTION),
         props: z.array(
           z.object({
-            type: z.enum([ToolPropTypes.STRING, ToolTypes.DOCUMENT]),
+            type: z.enum([
+              ToolPropTypes.STRING,
+              ToolPropTypes.NUMBER,
+              ToolPropTypes.BOOLEAN,
+            ]),
             name: z.string(),
             description: z.string(),
           }),

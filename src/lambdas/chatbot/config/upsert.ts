@@ -8,6 +8,7 @@ import {
   BotConfigSchemaType,
 } from "../../../validation/botConfig";
 import { validate } from "../../../middleware/validate";
+import Tool from "../../../entities/tool";
 
 export const logic = async (
   validRequest: BotConfigSchemaType,
@@ -15,7 +16,7 @@ export const logic = async (
   const dataSource = await getDataSourceInstance(getConnectionParams());
 
   const botRepo = dataSource.getRepository(Bot);
-  const toolRepo = dataSource.getRepository(Bot);
+  const toolRepo = dataSource.getRepository(Tool);
   try {
     await botRepo.upsert({ name: validRequest.botName }, ["name"]);
   } catch (e) {

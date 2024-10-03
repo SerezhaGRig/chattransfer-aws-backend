@@ -10,6 +10,7 @@ import Tool from "./tool";
 export enum ToolPropTypes {
   STRING = "string",
   NUMBER = "number",
+  BOOLEAN = "boolean",
 }
 
 @Entity({ name: "tool_schema_property" })
