@@ -2,6 +2,7 @@ import { ToolNode } from "@langchain/langgraph/prebuilt";
 import { BaseMessage } from "@langchain/core/messages";
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { getRetrieverToolsDynamic } from "./vectorStoreRetrieverToolDynamic";
+import { IState } from "../types";
 
 export const getTools = async (botName?: string) => {
   let tools: DynamicStructuredTool[] | undefined;
@@ -23,7 +24,7 @@ export const getToolsNode = async (botName: string) => {
     const toolNode = new ToolNode<{ messages: BaseMessage[] }>(tools);
     return toolNode;
   }
-  return () => {
-    return "agent";
+  return (state: IState) => {
+    return state;
   };
 };
