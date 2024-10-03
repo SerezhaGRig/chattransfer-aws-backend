@@ -7,6 +7,7 @@ export const getToolDescriptionDynamic = async (botName?: string) => {
   const toolDescriptions = await dataSource.getRepository(Tool).find({
     relations: botName && {
       bot: true,
+      tool_schema_properties: true,
     },
     where: {
       bot: botName && {

@@ -23,8 +23,8 @@ const routeMessage = (state: IState) => {
   return "tools";
 };
 
-export const createWorkflow = async () => {
-  const toolNode = await getToolsNode();
+export const createWorkflow = async (botName: string) => {
+  const toolNode = await getToolsNode(botName);
   const workflow = new StateGraph<IState>({
     channels: graphState,
   })

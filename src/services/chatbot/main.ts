@@ -14,7 +14,7 @@ export const sendMessage = async (
   mode: "invoke" | "stream" = "invoke",
 ) => {
   const checkpointer = await PostgresSaver.fromConnString(getPostgresConfig());
-  const workflow = await createWorkflow();
+  const workflow = await createWorkflow(botName);
   const app = workflow.compile({ checkpointer });
   const config = {
     configurable: {

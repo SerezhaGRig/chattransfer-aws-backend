@@ -6,8 +6,8 @@ import { DynamicStructuredTool } from "@langchain/core/tools";
 import { z } from "zod";
 import { saveToolResponse } from "./saveToolResponse";
 
-export const getRetrieverToolsDynamic = async () => {
-  const toolDescriptionsDynamic = await getToolDescriptionDynamic();
+export const getRetrieverToolsDynamic = async (botName?: string) => {
+  const toolDescriptionsDynamic = await getToolDescriptionDynamic(botName);
   return toolDescriptionsDynamic.map((toolDescr) => {
     if (toolDescr.type === "DOCUMENT") {
       const tool = createRetrieverTool(
@@ -57,11 +57,14 @@ export const getRetrieverToolsDynamic = async () => {
       return tool;
     } else {
       const object = {};
-      toolDescr.tool_schema_properties.forEach((prop) => {
+      toolDescr.tool_schema_properties?.forEach((prop) => {
+        console.log(prop);
         object[prop.name] =
           prop.type === "string"
-            ? z.string().describe(prop.description)
-            : z.number().describe(prop.description);
+            ? z.string().optional().describe(prop.description)
+            : prop.type === "boolean"
+              ? z.boolean().optional().describe(prop.description)
+              : z.number().optional().describe(prop.description);
       });
       const schema = z.object(object);
       return new DynamicStructuredTool({
@@ -70,9 +73,10 @@ export const getRetrieverToolsDynamic = async () => {
         schema,
         func: async (input, runManager, config) => {
           try {
+            console.info("input", input);
             await saveToolResponse(toolDescr.id, input, config);
           } catch (e) {
-            console.error("Error when saving tool response:", e);
+            console.error(e);
             return "Unable to retrieve info from tool";
           }
           if (toolDescr.response) {

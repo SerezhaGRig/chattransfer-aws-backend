@@ -1,29 +1,26 @@
 import { ToolNode } from "@langchain/langgraph/prebuilt";
 import { BaseMessage } from "@langchain/core/messages";
-import { connectWithAgent } from "./connectWithAgent";
-import { healthInsurancePlans } from "./healthInsurancePlans";
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { getRetrieverToolsDynamic } from "./vectorStoreRetrieverToolDynamic";
+import { connectWithAgent } from "./connectWithAgent";
+import { healthInsurancePlans } from "./healthInsurancePlans";
 
-export const getTools = async () => {
+export const getTools = async (botName?: string) => {
   let tools: DynamicStructuredTool[] | undefined;
   if (tools === undefined) {
     try {
-      const retrieverToolsDynamic = await getRetrieverToolsDynamic();
-      tools = [
-        await healthInsurancePlans(),
-        await connectWithAgent(),
-        ...retrieverToolsDynamic,
-      ];
+      const retrieverToolsDynamic = await getRetrieverToolsDynamic(botName);
+      tools = [...retrieverToolsDynamic];
     } catch (e) {
-      tools = [await healthInsurancePlans(), await connectWithAgent()];
+      console.error(e);
+      tools = [await connectWithAgent(), await healthInsurancePlans()];
     }
   }
   return tools;
 };
 
-export const getToolsNode = async () => {
-  const tools: DynamicStructuredTool[] = await getTools();
+export const getToolsNode = async (botName: string) => {
+  const tools: DynamicStructuredTool[] = await getTools(botName);
   const toolNode = new ToolNode<{ messages: BaseMessage[] }>(tools);
   return toolNode;
 };
