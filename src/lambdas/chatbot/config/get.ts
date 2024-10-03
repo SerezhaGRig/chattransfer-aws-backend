@@ -8,7 +8,7 @@ export const logic = async (): Promise<HandlerResponse> => {
   const dataSource = await getDataSourceInstance(getConnectionParams());
 
   const botRepo = dataSource.getRepository(Bot);
-  const data = botRepo.find({
+  const data = await botRepo.find({
     relations: {
       tools: {
         tool_schema_properties: true,
