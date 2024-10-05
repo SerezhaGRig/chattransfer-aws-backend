@@ -26,4 +26,18 @@ export const deleteFileFromVectorStore = async (s3Key: string) => {
       name: lastFolderName,
     },
   });
+  const tool = await dataSource.getRepository(Tool).find({
+    relations: {
+      bot: true,
+    },
+    where: {
+      source: fileName,
+      bot: {
+        name: lastFolderName,
+      },
+    },
+  });
+  if (tool) {
+    await dataSource.getRepository(Tool).remove(tool);
+  }
 };

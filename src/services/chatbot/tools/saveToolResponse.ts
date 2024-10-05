@@ -5,6 +5,7 @@ import { RunnableConfig } from "@langchain/core/runnables";
 
 export const saveToolResponse = async (
   toolId: string,
+  botName: string,
   input: { [key: string]: number | string },
   config: RunnableConfig,
 ) => {
@@ -14,6 +15,7 @@ export const saveToolResponse = async (
       return {
         name: key,
         value: String(input[key]),
+        bot_name: botName,
         conversation_id: config.metadata.thread_id as string,
         tool: {
           id: toolId,

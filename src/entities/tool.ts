@@ -5,6 +5,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  Unique,
 } from "typeorm";
 import Bot from "./bot";
 import ToolSchemaProperty from "./toolSchemaPropery";
@@ -14,7 +15,7 @@ export enum ToolTypes {
   DOCUMENT = "DOCUMENT",
   FUNCTION = "FUNCTION",
 }
-
+@Unique(["bot", "name"])
 @Entity({ name: "tool" })
 export default class Tool {
   @PrimaryGeneratedColumn("uuid")
@@ -54,7 +55,7 @@ export default class Tool {
     "tool_schema_response",
     (toolResp: ToolSchemaResponse) => toolResp.tool,
     {
-      cascade: ["insert", "update", "remove", "recover"],
+      cascade: ["insert", "update", "recover"],
     },
   )
   tool_schema_responses: ToolSchemaResponse[];

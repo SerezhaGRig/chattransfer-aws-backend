@@ -38,16 +38,16 @@ export const logic = async (
 
   await toolRepo.save(
     validRequest.tools.map((tool) => {
+      const foundTool = bot.tools.find((t) => t.name === tool.name);
       return {
+        id: foundTool?.id || undefined,
         name: tool.name,
         description: tool.description,
         response: tool.response,
         type: tool.type,
         source: undefined,
         bot,
-        tool_schema_responses:
-          bot.tools.find((t) => t.name === tool.name)?.tool_schema_responses ||
-          [],
+        tool_schema_responses: foundTool?.tool_schema_responses || [],
         tool_schema_properties: tool.props.map((p) => ({
           type: p.type,
           name: p.name,
@@ -56,6 +56,12 @@ export const logic = async (
       };
     }),
   );
+
+  const toolsToRemove = bot.tools.filter((tool) => {
+    const foundTool = validRequest.tools.find((t) => t.name === tool.name);
+    return !foundTool && tool.source === null;
+  });
+  await toolRepo.remove(toolsToRemove);
   return {
     data: {
       message: "success",

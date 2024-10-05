@@ -26,7 +26,7 @@ export const vectorStore = new WeaviateStore(new OpenAIEmbeddings(), {
 export const getVectorStoreDynamic = async (indexName: string) => {
   return new WeaviateStore(new OpenAIEmbeddings(), {
     client,
-    indexName,
+    indexName: indexName.toUpperCase(),
     textKey: "text",
   });
 };

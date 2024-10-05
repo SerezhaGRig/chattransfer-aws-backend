@@ -24,10 +24,7 @@ export default class ToolSchemaResponse {
   })
   name: string;
 
-  @ManyToOne("Tool", {
-    onDelete: "CASCADE",
-    orphanedRowAction: "delete",
-  })
+  @ManyToOne("Tool")
   @JoinColumn()
   tool: Tool;
 
@@ -50,4 +47,11 @@ export default class ToolSchemaResponse {
     nullable: false,
   })
   conversation_id: string;
+
+  @Column({
+    type: "varchar",
+    length: 255,
+    nullable: false,
+  })
+  bot_name: string;
 }

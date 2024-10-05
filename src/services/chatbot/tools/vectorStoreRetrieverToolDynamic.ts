@@ -1,15 +1,21 @@
 import { getToolDescriptionDynamic } from "./toolDescriptionDynamic";
 import { createRetrieverTool } from "langchain/tools/retriever";
-import { vectorStore } from "../vectorStore";
 import { translateIntoEnglish } from "./helpers";
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { z } from "zod";
 import { saveToolResponse } from "./saveToolResponse";
+import { getVectorStoreDynamic } from "../vectorStore";
 
 export const getRetrieverToolsDynamic = async (botName?: string) => {
   const toolDescriptionsDynamic = await getToolDescriptionDynamic(botName);
+  let vectorStore: Awaited<ReturnType<typeof getVectorStoreDynamic>>;
+  try {
+    vectorStore = await getVectorStoreDynamic(botName);
+  } catch (ex) {
+    console.error(ex);
+  }
   return toolDescriptionsDynamic.map((toolDescr) => {
-    if (toolDescr.type === "DOCUMENT") {
+    if (toolDescr.type === "DOCUMENT" && vectorStore) {
       const tool = createRetrieverTool(
         vectorStore.asRetriever({
           k: 1,
@@ -74,7 +80,12 @@ export const getRetrieverToolsDynamic = async (botName?: string) => {
         func: async (input, runManager, config) => {
           try {
             console.info("input", input);
-            await saveToolResponse(toolDescr.id, input, config);
+            await saveToolResponse(
+              toolDescr.id,
+              toolDescr.bot.name,
+              input,
+              config,
+            );
           } catch (e) {
             console.error(e);
             return "Unable to retrieve info from tool";
