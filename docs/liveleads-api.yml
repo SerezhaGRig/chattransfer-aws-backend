@@ -312,6 +312,10 @@ paths:
                         name:
                           type: string
                           description: Name of the bot.
+                        personalPreamble:
+                          type: string
+                          description: Personal preamble of the bot.
+                          example: You are insurance bot
                         tools:
                           type: array
                           items:
@@ -381,6 +385,10 @@ paths:
                   type: string
                   description: Name of the bot.
                   example: testBot
+                personalPreamble:
+                  type: string
+                  description: Personal preamble of the bot.
+                  example: You are insurance bot
                 tools:
                   type: array
                   items:
