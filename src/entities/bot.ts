@@ -21,6 +21,13 @@ export default class Bot {
   })
   name: string;
 
+  @Column({
+    type: "varchar",
+    length: 255,
+    nullable: true,
+  })
+  personal_preamble: string;
+
   @OneToMany("tool", (tool: Tool) => tool.bot, {
     cascade: ["insert", "update", "remove", "recover"],
   })

@@ -5,6 +5,7 @@ import { ToolPropTypes } from "../entities/toolSchemaPropery";
 export const botConfigSchema = z
   .object({
     botName: z.string(),
+    personalPreamble: z.string().optional(),
     tools: z.array(
       z.object({
         name: z.string(),

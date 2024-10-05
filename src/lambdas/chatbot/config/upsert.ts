@@ -18,7 +18,13 @@ export const logic = async (
   const botRepo = dataSource.getRepository(Bot);
   const toolRepo = dataSource.getRepository(Tool);
   try {
-    await botRepo.upsert({ name: validRequest.botName }, ["name"]);
+    await botRepo.upsert(
+      {
+        name: validRequest.botName,
+        personal_preamble: validRequest.personalPreamble,
+      },
+      ["name"],
+    );
   } catch (e) {
     console.error(e);
   }

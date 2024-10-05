@@ -12,6 +12,7 @@ import { Entities1727943348261 } from "./1727943348261-entities";
 import { Entities1728143518903 } from "./1728143518903-entities";
 import { Entities1728146924461 } from "./1728146924461-entities";
 import { Entities1728147510943 } from "./1728147510943-entities";
+import { Entities1728152392372 } from "./1728152392372-entities";
 
 export const getMigrations = [
   Entities1722759881542,
@@ -21,4 +22,5 @@ export const getMigrations = [
   Entities1728143518903,
   Entities1728146924461,
   Entities1728147510943,
+  Entities1728152392372,
 ];
