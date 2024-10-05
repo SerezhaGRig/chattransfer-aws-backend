@@ -22,8 +22,7 @@ export default class Bot {
   name: string;
 
   @Column({
-    type: "varchar",
-    length: 255,
+    type: "text",
     nullable: true,
   })
   personal_preamble: string;

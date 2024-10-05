@@ -17,18 +17,18 @@ export const logic = async (
 
   const botRepo = dataSource.getRepository(Bot);
   const toolRepo = dataSource.getRepository(Tool);
-  try {
-    await botRepo.upsert(
-      {
-        name: validRequest.botName,
-        personal_preamble: validRequest.personalPreamble,
-      },
-      ["name"],
-    );
-  } catch (e) {
-    console.error(e);
-  }
-  const bot = await botRepo.findOne({
+  let bot = await botRepo.findOne({
+    where: {
+      name: validRequest.botName,
+    },
+  });
+  await botRepo.save({
+    id: bot?.id,
+    name: validRequest.botName,
+    personal_preamble: validRequest.personalPreamble,
+  });
+
+  bot = await botRepo.findOne({
     relations: {
       tools: {
         tool_schema_responses: true,
@@ -38,6 +38,7 @@ export const logic = async (
       name: validRequest.botName,
     },
   });
+
   if (!bot) {
     throw new Error(`bot isn't created with name ${validRequest.botName}`);
   }
