@@ -52,7 +52,7 @@ export const logic = async (
         description: tool.description,
         response: tool.response,
         type: tool.type,
-        source: undefined,
+        source: tool.source,
         bot,
         tool_schema_responses: foundTool?.tool_schema_responses || [],
         tool_schema_properties: tool.props.map((p) => ({
@@ -66,7 +66,7 @@ export const logic = async (
 
   const toolsToRemove = bot.tools.filter((tool) => {
     const foundTool = validRequest.tools.find((t) => t.name === tool.name);
-    return !foundTool && tool.source === null;
+    return !foundTool && tool.type === "FUNCTION";
   });
   await toolRepo.remove(toolsToRemove);
   return {

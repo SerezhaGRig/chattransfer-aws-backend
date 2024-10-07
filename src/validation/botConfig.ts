@@ -13,6 +13,7 @@ export const botConfigSchema = z
         name: z.string(),
         description: z.string(),
         response: z.string(),
+        source: z.string().optional(),
         type: z
           .enum([ToolTypes.FUNCTION, ToolTypes.DOCUMENT])
           .default(ToolTypes.FUNCTION),
