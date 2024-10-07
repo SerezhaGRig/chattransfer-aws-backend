@@ -4,7 +4,9 @@ export const sendMessageRequestBodySchema = z
   .object({
     message: z.string(),
     conversationId: z.string().uuid(),
-    botName: z.string(),
+    botName: z.string().transform((name) => {
+      name.replace(/[^a-zA-Z]/g, "").toUpperCase();
+    }),
   })
   .strict();
 
