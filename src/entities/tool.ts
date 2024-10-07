@@ -55,7 +55,7 @@ export default class Tool {
     "tool_schema_response",
     (toolResp: ToolSchemaResponse) => toolResp.tool,
     {
-      cascade: ["insert", "update", "recover"],
+      cascade: false,
     },
   )
   tool_schema_responses: ToolSchemaResponse[];
