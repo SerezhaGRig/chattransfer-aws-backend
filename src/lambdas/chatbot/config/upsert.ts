@@ -25,9 +25,7 @@ export const logic = async (
   if (bot) {
     await botRepo.update(
       {
-        id: bot.id,
         name: validRequest.botName,
-        personal_preamble: validRequest.personalPreamble,
       },
       {
         name: validRequest.botName,
