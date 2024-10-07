@@ -5,7 +5,7 @@ import { ToolPropTypes } from "../entities/toolSchemaPropery";
 export const botConfigSchema = z
   .object({
     botName: z.string().transform((name) => {
-      name.replace(/[^a-zA-Z]/g, "").toUpperCase();
+      return name.replace(/[^a-zA-Z]/g, "").toUpperCase();
     }),
     personalPreamble: z.string().optional(),
     tools: z.array(
@@ -36,7 +36,7 @@ export type BotConfigSchemaType = z.infer<typeof botConfigSchema>;
 export const deleteBotPathParams = z
   .object({
     botName: z.string().transform((name) => {
-      name.replace(/[^a-zA-Z]/g, "").toUpperCase();
+      return name.replace(/[^a-zA-Z]/g, "").toUpperCase();
     }),
   })
   .strict();

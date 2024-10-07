@@ -22,11 +22,24 @@ export const logic = async (
       name: validRequest.botName,
     },
   });
-  await botRepo.save({
-    id: bot?.id,
-    name: validRequest.botName,
-    personal_preamble: validRequest.personalPreamble,
-  });
+  if (bot) {
+    await botRepo.update(
+      {
+        id: bot.id,
+        name: validRequest.botName,
+        personal_preamble: validRequest.personalPreamble,
+      },
+      {
+        name: validRequest.botName,
+        personal_preamble: validRequest.personalPreamble,
+      },
+    );
+  } else {
+    await botRepo.insert({
+      name: validRequest.botName,
+      personal_preamble: validRequest.personalPreamble,
+    });
+  }
 
   bot = await botRepo.findOne({
     relations: {

@@ -5,7 +5,7 @@ export const sendMessageRequestBodySchema = z
     message: z.string(),
     conversationId: z.string().uuid(),
     botName: z.string().transform((name) => {
-      name.replace(/[^a-zA-Z]/g, "").toUpperCase();
+      return name.replace(/[^a-zA-Z]/g, "").toUpperCase();
     }),
   })
   .strict();
@@ -15,7 +15,9 @@ export const sendMessageAndStreamSchema = z
     message: z.string(),
     conversationId: z.string().uuid(),
     messageId: z.string().uuid(),
-    botName: z.string(),
+    botName: z.string().transform((name) => {
+      return name.replace(/[^a-zA-Z]/g, "").toUpperCase();
+    }),
   })
   .strict();
 
