@@ -30,9 +30,7 @@ export const botConfigSchema = z
             ]),
             name: z
               .string()
-              .transform((str) =>
-                str.toLowerCase().replace(/[^a-zA-Z0-9_-]/g, "_"),
-              ),
+              .transform((str) => str.replace(/[^a-zA-Z0-9_-]/g, "_")),
             description: z.string(),
           }),
         ),
