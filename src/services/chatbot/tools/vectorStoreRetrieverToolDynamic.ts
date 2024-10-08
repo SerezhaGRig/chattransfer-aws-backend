@@ -1,4 +1,4 @@
-import { getToolDescriptionDynamic } from "./toolDescriptionDynamic";
+import { getBotConfigDynamic } from "./botConfigDynamic";
 import { createRetrieverTool } from "langchain/tools/retriever";
 import { translateIntoEnglish } from "./helpers";
 import { DynamicStructuredTool } from "@langchain/core/tools";
@@ -7,7 +7,7 @@ import { saveToolResponse } from "./saveToolResponse";
 import { getVectorStoreDynamic } from "../vectorStore";
 
 export const getRetrieverToolsDynamic = async (botName?: string) => {
-  const toolDescriptionsDynamic = await getToolDescriptionDynamic(botName);
+  const toolDescriptionsDynamic = (await getBotConfigDynamic()).tools;
   let vectorStore: Awaited<ReturnType<typeof getVectorStoreDynamic>>;
   try {
     vectorStore = await getVectorStoreDynamic(botName);

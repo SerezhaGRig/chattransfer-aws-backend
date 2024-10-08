@@ -27,7 +27,7 @@ export const deleteFileFromVectorStore = async (s3Key: string) => {
     where: {
       source: fileName,
       bot: {
-        name: lastFolderName,
+        name: lastFolderName.replace(/[^a-zA-Z0-9]/g, "").toUpperCase(),
       },
     },
   });

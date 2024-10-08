@@ -3,6 +3,7 @@ import { PostgresSaver } from "./checkpointer/postgres";
 import { getPostgresConfig } from "./checkpointer/config";
 import { createWorkflow } from "./workflow";
 import { markedToHtml } from "./helper";
+import { initBotConfig } from "./tools/botConfigDynamic";
 
 export const sendMessage = async (
   botName: string,
@@ -13,6 +14,7 @@ export const sendMessage = async (
   threadId: string,
   mode: "invoke" | "stream" = "invoke",
 ) => {
+  await initBotConfig(botName);
   const checkpointer = await PostgresSaver.fromConnString(getPostgresConfig());
   const workflow = await createWorkflow(botName);
   const app = workflow.compile({ checkpointer });

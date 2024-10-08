@@ -83,7 +83,7 @@ export const addFileIntoVectorStoreFromS3 = async (s3Key: string) => {
   );
   const bot = await dataSource.getRepository(Bot).findOne({
     where: {
-      name: lastFolderName.replace(/[^a-zA-Z]/g, "").toUpperCase(),
+      name: lastFolderName.replace(/[^a-zA-Z0-9]/g, "").toUpperCase(),
     },
   });
   await dataSource.getRepository(Tool).insert({
