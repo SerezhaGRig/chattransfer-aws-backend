@@ -45,6 +45,7 @@ export const callModel = async (state: IState, config?: RunnableConfig) => {
   }
   enhancedMessages.push(new SystemMessage({ content: responseFormat }));
   enhancedMessages.push(...messages);
+  console.info("enhancedMessages", enhancedMessages);
   const tools =
     typeof botName === "string" ? await getTools(botName) : await getTools();
   const boundModel = tools.length > 0 ? model.bindTools(tools) : model;

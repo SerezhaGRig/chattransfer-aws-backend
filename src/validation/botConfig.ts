@@ -10,7 +10,11 @@ export const botConfigSchema = z
     personalPreamble: z.string().optional(),
     tools: z.array(
       z.object({
-        name: z.string(),
+        name: z
+          .string()
+          .transform((str) =>
+            str.toLowerCase().replace(/[^a-zA-Z0-9_-]/g, "_"),
+          ),
         description: z.string(),
         response: z.string(),
         source: z.string().optional(),
@@ -24,7 +28,11 @@ export const botConfigSchema = z
               ToolPropTypes.NUMBER,
               ToolPropTypes.BOOLEAN,
             ]),
-            name: z.string(),
+            name: z
+              .string()
+              .transform((str) =>
+                str.toLowerCase().replace(/[^a-zA-Z0-9_-]/g, "_"),
+              ),
             description: z.string(),
           }),
         ),
