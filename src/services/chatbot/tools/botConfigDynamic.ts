@@ -6,7 +6,7 @@ let botConfig: Bot | undefined;
 
 export const initBotConfig = async (botName: string) => {
   const dataSource = await getDataSourceInstance(getConnectionParams());
-  const toolDescriptions = await dataSource.getRepository(Bot).find({
+  botConfig = await dataSource.getRepository(Bot).findOne({
     relations: {
       tools: {
         tool_schema_properties: true,
@@ -16,11 +16,10 @@ export const initBotConfig = async (botName: string) => {
       name: botName,
     },
   });
-  console.info("toolDescriptions", toolDescriptions);
 };
 
 export const getBotConfigDynamic = async () => {
-  if (botConfig) {
+  if (!botConfig) {
     throw new Error("bot config is missing");
   }
   return botConfig;
