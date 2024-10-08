@@ -11,7 +11,7 @@ export const botConfigSchema = z
     tools: z.array(
       z.object({
         name: z.string().transform((str) => {
-          return str.toLowerCase().replace(/[^a-zA-Z0-9_-]/g, "_");
+          return str.toLowerCase().replace(/[^a-zA-Z0-9_-]/g, "-");
         }),
         description: z.string(),
         response: z.string(),
