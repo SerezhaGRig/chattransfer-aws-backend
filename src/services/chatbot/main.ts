@@ -30,6 +30,7 @@ export const sendMessage = async (
 
   console.log("start sending");
   console.log({ key: process.env.OPENAI_API_KEY });
+  let messageResponse: string;
   for await (const { messages } of await app.stream(inputs, {
     ...config,
     streamMode: "values",
@@ -44,7 +45,7 @@ export const sendMessage = async (
           const messageParsed = markedToHtml(
             msg.content.replace(/```html\s*|```/g, ""),
           );
-          return messageParsed;
+          messageResponse = await messageParsed;
         }
       }
       // } else if (msg instanceof HumanMessage) {
@@ -53,4 +54,5 @@ export const sendMessage = async (
       // }
     }
   }
+  return messageResponse;
 };

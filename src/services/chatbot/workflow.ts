@@ -6,7 +6,12 @@ import { AIMessage, BaseMessage } from "@langchain/core/messages";
 
 const graphState: StateGraphArgs<IState>["channels"] = {
   messages: {
-    value: (x: BaseMessage[], y: BaseMessage[]) => x.concat(y),
+    value: (x: BaseMessage[], y: BaseMessage[]) => {
+      console.info("x", x);
+      console.info("y", y);
+
+      return x.concat(y);
+    },
     default: () => [],
   },
 };
